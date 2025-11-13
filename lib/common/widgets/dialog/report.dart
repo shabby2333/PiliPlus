@@ -35,8 +35,8 @@ Future<void> autoWrapReportDialog(
               child: SingleChildScrollView(
                 child: AnimatedSize(
                   duration: const Duration(milliseconds: 200),
-                  child: Builder(
-                    builder: (context) => Column(
+                  child: StatefulBuilder(
+                    builder: (context, setState) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
@@ -45,23 +45,22 @@ Future<void> autoWrapReportDialog(
                             right: 22,
                             bottom: 5,
                           ),
-                          child: Text('请选择举报的理由：'),
+                          child: Text('请选择举报的理由:'),
                         ),
-                        RadioGroup(
-                          onChanged: (value) {
-                            reasonType = value;
-                            (context as Element).markNeedsBuild();
-                          },
-                          groupValue: reasonType,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: options.entries.map((entry) {
-                              return WrapRadioOptionsGroup<int>(
-                                groupTitle: entry.key,
-                                options: entry.value,
-                              );
-                            }).toList(),
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: options.entries.map((entry) {
+                            return WrapRadioOptionsGroup<int>(
+                              groupTitle: entry.key,
+                              options: entry.value,
+                              groupValue: reasonType,
+                              onChanged: (value) {
+                                setState(() {
+                                  reasonType = value;
+                                });
+                              },
+                            );
+                          }).toList(),
                         ),
                         if (reasonType == 0)
                           Padding(

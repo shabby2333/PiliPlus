@@ -42,7 +42,7 @@ abstract class CommonSearchPanelState<
         controller: controller.scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: [
-          ?buildHeader(theme),
+          if (buildHeader != null) buildHeader(theme),
           SliverPadding(
             padding: EdgeInsets.only(
               bottom: MediaQuery.viewPaddingOf(context).bottom + 100,

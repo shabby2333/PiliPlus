@@ -118,7 +118,7 @@ class _DynamicSliverAppBarMediumState extends State<DynamicSliverAppBarMedium> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final width = MediaQuery.widthOf(context);
+    final width = MediaQuery.sizeOf(context).width;
     if (_width != width) {
       _width = width;
       _height = 0;

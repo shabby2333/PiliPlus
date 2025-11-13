@@ -200,10 +200,10 @@ class VideoHttp {
     String? language,
   }) async {
     final params = await WbiSign.makSign({
-      'avid': ?avid,
-      'bvid': ?bvid,
-      'ep_id': ?epid,
-      'season_id': ?seasonId,
+      // REMOVED: 'avid': ?avid,
+      // REMOVED: 'bvid': ?bvid,
+      // REMOVED: 'ep_id': ?epid,
+      // REMOVED: 'season_id': ?seasonId,
       'cid': cid,
       'qn': qn ?? 80,
       // 获取所有格式的视频
@@ -216,7 +216,7 @@ class VideoHttp {
       'web_location': 1315873,
       // 免登录查看1080p
       if (tryLook) 'try_look': 1,
-      'cur_language': ?language,
+      // REMOVED: 'cur_language': ?language,
     });
 
     try {
@@ -475,11 +475,11 @@ class VideoHttp {
       queryParameters: {
         'goto': goto,
         'id': id,
-        'reason_id': ?reasonId,
-        'feedback_id': ?feedbackId,
         'build': 1,
         'mobi_app': 'android',
-      },
+        },
+        if (reasonId != null) queryParams['reason_id'] = reasonId;
+        if (feedbackId != null) queryParams['feedback_id'] = feedbackId;
     );
     if (res.data['code'] == 0) {
       return {'status': true};
@@ -503,11 +503,11 @@ class VideoHttp {
       queryParameters: {
         'goto': goto,
         'id': id,
-        'reason_id': ?reasonId,
-        'feedback_id': ?feedbackId,
         'build': 1,
         'mobi_app': 'android',
-      },
+        },
+        if (reasonId != null) queryParams['reason_id'] = reasonId;
+        if (feedbackId != null) queryParams['feedback_id'] = feedbackId;
     );
     if (res.data['code'] == 0) {
       return {'status': true};
@@ -654,8 +654,8 @@ class VideoHttp {
     await Request().post(
       Api.historyReport,
       data: {
-        'aid': ?aid,
-        'type': ?type,
+        // REMOVED: 'aid': ?aid,
+        // REMOVED: 'type': ?type,
         'csrf': Accounts.heartbeat.csrf,
       },
       options: Options(contentType: Headers.formUrlEncodedContentType),
@@ -674,18 +674,23 @@ class VideoHttp {
     required VideoType videoType,
   }) async {
     final isPugv = videoType == VideoType.pugv;
+    var data = {
+      'cid': cid,
+      'type': videoType.type,
+      'played_time': progress,
+      'csrf': Accounts.heartbeat.csrf,
+    };
+    if (isPugv && aid != null) {
+      data['aid'] = aid;
+    } else if (!isPugv && bvid != null) {
+      data['bvid'] = bvid;
+    }
+    if (epid != null) data['epid'] = epid;
+    if (seasonId != null) data['sid'] = seasonId;
+    if (subType != null) data['sub_type'] = subType;
     await Request().post(
       Api.heartBeat,
-      data: {
-        if (isPugv) 'aid': ?aid else 'bvid': ?bvid,
-        'cid': cid,
-        'epid': ?epid,
-        'sid': ?seasonId,
-        'type': videoType.type,
-        'sub_type': ?subType,
-        'played_time': progress,
-        'csrf': Accounts.heartbeat.csrf,
-      },
+      data: data,
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
   }
@@ -840,11 +845,11 @@ class VideoHttp {
     var res = await Request().get(
       Api.playInfo,
       queryParameters: await WbiSign.makSign({
-        'aid': ?aid,
-        'bvid': ?bvid,
+        // REMOVED: 'aid': ?aid,
+        // REMOVED: 'bvid': ?bvid,
         'cid': cid,
-        'season_id': ?seasonId,
-        'ep_id': ?epId,
+        // REMOVED: 'season_id': ?seasonId,
+        // REMOVED: 'ep_id': ?epId,
       }),
     );
     if (res.data['code'] == 0) {
@@ -996,8 +1001,8 @@ class VideoHttp {
         'oid_type': 0,
         'pn': page,
         'ps': 10,
-        'uper_mid': ?uperMid,
-      },
+        },
+        if (uperMid != null) queryParams['uper_mid'] = uperMid;
     );
     if (res.data['code'] == 0) {
       return Success(VideoNoteData.fromJson(res.data['data']));
@@ -1070,12 +1075,10 @@ class VideoHttp {
   }) async {
     final accessKey = Accounts.get(AccountType.video).accessKey;
     final params = {
-      'access_key': ?accessKey,
       'actionKey': 'appkey',
       'cid': cid,
       'fourk': 1,
       'is_proj': 1,
-      'mobile_access_key': ?accessKey,
       'object_id': objectId,
       'mobi_app': 'android',
       'platform': 'android',
@@ -1083,7 +1086,9 @@ class VideoHttp {
       'protocol': 0,
       'qn': qn ?? 80,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-    };
+      };
+      if (accessKey != null) params['access_key'] = accessKey;
+      if (accessKey != null) params['mobile_access_key'] = accessKey;
     AppSign.appSign(params);
     final res = await Request().get(
       Api.tvPlayUrl,

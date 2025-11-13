@@ -157,8 +157,8 @@ class UserHttp {
     var res = await Request().post(
       Api.toViewLater,
       data: {
-        'aid': ?aid,
-        'bvid': ?bvid,
+        // REMOVED: 'aid': ?aid,
+        // REMOVED: 'bvid': ?bvid,
         'csrf': Accounts.main.csrf,
       },
       options: Options(contentType: Headers.formUrlEncodedContentType),
@@ -212,7 +212,7 @@ class UserHttp {
     var res = await Request().post(
       Api.toViewClear,
       data: {
-        'clean_type': ?cleanType,
+        // REMOVED: 'clean_type': ?cleanType,
         'csrf': Accounts.main.csrf,
       },
       options: Options(contentType: Headers.formUrlEncodedContentType),
@@ -310,7 +310,7 @@ class UserHttp {
   }) async {
     var res = await Request().get(
       Api.videoTags,
-      queryParameters: {'bvid': bvid, 'cid': ?cid},
+      if (cid != null) cid,
     );
     if (res.data['code'] == 0) {
       return Success(
@@ -341,15 +341,15 @@ class UserHttp {
         'mobi_app': 'web',
         'type': type,
         'biz_id': bizId,
-        'oid': ?oid,
-        'otype': ?otype, // ugc:2 // pgc: 24
         'ps': ps,
         'direction': direction,
         'desc': desc,
         'sort_field': sortField,
         'tid': 0,
         'with_current': withCurrent,
-      },
+        },
+        if (oid != null) queryParams['oid'] = oid;
+        if (otype != null) queryParams['otype'] = otype;
     );
     if (res.data['code'] == 0) {
       return {'status': true, 'data': MediaListData.fromJson(res.data['data'])};
@@ -528,12 +528,12 @@ class UserHttp {
       Api.sameFollowing,
       queryParameters: {
         'csrf': Accounts.main.csrf,
-        'pn': ?pn,
         'vmid': mid,
         'web_location': 333.789,
         'x-bili-device-req-json':
             '{"platform":"web","device":"pc","spmid":"333.789"}',
-      },
+        },
+        if (pn != null) queryParams['pn'] = pn;
     );
     if (res.data['code'] == 0) {
       return Success(FollowData.fromJson(res.data['data']));

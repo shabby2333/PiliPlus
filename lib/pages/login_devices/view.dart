@@ -63,7 +63,7 @@ class LloginDevicesPageState extends State<LoginDevicesPage> {
                   return _buildItem(colorScheme, response[index]);
                 },
                 itemCount: response!.length,
-                separatorBuilder: (_, _) => divider,
+                separatorBuilder: (_, __) => divider,
               )
             : HttpError(onReload: _controller.onReload),
       Error(:var errMsg) => HttpError(

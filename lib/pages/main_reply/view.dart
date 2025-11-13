@@ -114,7 +114,7 @@ class _MainReplyPageState extends State<MainReplyPage> {
     return switch (loadingState) {
       Loading() => SliverPrototypeExtentList.builder(
         itemCount: 10,
-        itemBuilder: (_, _) => const VideoReplySkeleton(),
+        itemBuilder: (_, __) => const VideoReplySkeleton(),
         prototypeItem: const VideoReplySkeleton(),
       ),
       Success(:var response) =>

@@ -192,7 +192,7 @@ class _HorizontalMemberPageState extends State<HorizontalMemberPage> {
     return switch (loadingState) {
       Loading() => SliverPrototypeExtentList.builder(
         itemCount: 10,
-        itemBuilder: (_, _) => const VideoCardHSkeleton(),
+        itemBuilder: (_, __) => const VideoCardHSkeleton(),
         prototypeItem: const VideoCardHSkeleton(),
       ),
       Success(:var response) =>

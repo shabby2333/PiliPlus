@@ -44,7 +44,7 @@ class _SuperChatPanelState extends DebounceStreamState<SuperChatPanel, bool>
             onRemove: () => ctr?.add(true),
           );
         },
-        separatorBuilder: (_, _) => const SizedBox(height: 12),
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
       ),
     );
   }

@@ -37,14 +37,15 @@ class MemberHttp {
     String? reason,
     int? reasonV2,
   }) async {
+    var data = {
+      'mid': mid,
+      'reason': reason,
+      'csrf': Accounts.main.csrf,
+    };
+    if (reasonV2 != null) data['reason_v2'] = reasonV2;
     var res = await Request().post(
       HttpString.spaceBaseUrl + Api.reportMember,
-      data: {
-        'mid': mid,
-        'reason': reason,
-        'reason_v2': ?reasonV2,
-        'csrf': Accounts.main.csrf,
-      },
+      data: data,
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
     return {
@@ -121,7 +122,6 @@ class MemberHttp {
     bool? includeCursor,
   }) async {
     final params = {
-      'aid': ?aid,
       'build': 8430300,
       'version': '8.43.0',
       'c_locale': 'zh_CN',
@@ -130,17 +130,18 @@ class MemberHttp {
       'platform': 'android',
       's_locale': 'zh_CN',
       'ps': 20,
-      'pn': ?pn,
-      'next': ?next,
-      'season_id': ?seasonId,
-      'series_id': ?seriesId,
       'qn': type == ContributeType.video ? 80 : 32,
-      'order': ?order,
-      'sort': ?sort,
-      'include_cursor': ?includeCursor,
       'statistics': Constants.statisticsApp,
       'vmid': mid,
     };
+    if (aid != null) params['aid'] = aid;
+    if (pn != null) params['pn'] = pn;
+    if (next != null) params['next'] = next;
+    if (seasonId != null) params['season_id'] = seasonId;
+    if (seriesId != null) params['series_id'] = seriesId;
+    if (order != null) params['order'] = order;
+    if (sort != null) params['sort'] = sort;
+    if (includeCursor != null) params['include_cursor'] = includeCursor;
     var res = await Request().get(
       switch (type) {
         ContributeType.video => Api.spaceArchive,
@@ -261,10 +262,10 @@ class MemberHttp {
       'mobi_app': 'android',
       'platform': 'android',
       's_locale': 'zh_CN',
-      'from_view_aid': ?fromViewAid,
       'statistics': Constants.statisticsApp,
       'vmid': mid,
     };
+    if (fromViewAid != null) params['from_view_aid'] = fromViewAid;
     var res = await Request().get(
       Api.space,
       queryParameters: params,
@@ -356,12 +357,11 @@ class MemberHttp {
   }) async {
     String dmImgStr = Utils.base64EncodeRandomString(16, 64);
     String dmCoverImgStr = Utils.base64EncodeRandomString(32, 128);
-    final params = await WbiSign.makSign({
+    final signParams = {
       'mid': mid,
       'ps': ps,
       'tid': tid,
       'pn': pn,
-      'keyword': ?keyword,
       'order': order,
       'platform': 'web',
       'web_location': 1550101,
@@ -370,7 +370,9 @@ class MemberHttp {
       'dm_img_str': dmImgStr,
       'dm_cover_img_str': dmCoverImgStr,
       'dm_img_inter': '{"ds":[],"wh":[0,0,0],"of":[0,0,0]}',
-    });
+    };
+    if (keyword != null) signParams['keyword'] = keyword;
+    final params = await WbiSign.makSign(signParams);
     var res = await Request().get(
       Api.searchArchive,
       queryParameters: params,
@@ -709,17 +711,18 @@ class MemberHttp {
     required int page,
     int? privilegeType,
   }) async {
+    var queryParams = {
+      'up_mid': upMid,
+      'pn': page,
+      'ps': 100,
+      'mobi_app': 'web',
+      'web_location': 333.1196,
+      if (Accounts.main.isLogin) 'csrf': Accounts.main.csrf,
+    };
+    if (privilegeType != null) queryParams['privilege_type'] = privilegeType;
     var res = await Request().get(
       Api.upowerRank,
-      queryParameters: {
-        'up_mid': upMid,
-        'pn': page,
-        'ps': 100,
-        'privilege_type': ?privilegeType,
-        'mobi_app': 'web',
-        'web_location': 333.1196,
-        if (Accounts.main.isLogin) 'csrf': Accounts.main.csrf,
-      },
+      queryParameters: queryParams,
     );
     if (res.data['code'] == 0) {
       return Success(UpowerRankData.fromJson(res.data['data']));
@@ -770,13 +773,15 @@ class MemberHttp {
     required int mid,
   }) async {
     final params = {
-      'access_key': ?Accounts.main.accessKey,
       'actionKey': 'appkey',
       'build': 8430300,
       'mVersion': 309,
       'mallVersion': 8430300,
       'statistics': Constants.statisticsApp,
     };
+    if (Accounts.main.accessKey != null) {
+      params['access_key'] = Accounts.main.accessKey!;
+    }
     AppSign.appSign(params);
     var res = await Request().post(
       Api.spaceShop,

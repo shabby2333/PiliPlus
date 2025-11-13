@@ -26,13 +26,13 @@ class MsgHttp {
     var res = await Request().get(
       Api.msgFeedReply,
       queryParameters: {
-        'id': ?cursor,
-        'reply_time': ?cursorTime,
         'platform': 'web',
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-      },
+        },
+        if (cursor != null) queryParams['id'] = cursor;
+        if (cursorTime != null) queryParams['reply_time'] = cursorTime;
     );
     if (res.data['code'] == 0) {
       return Success(MsgReplyData.fromJson(res.data['data']));
@@ -48,13 +48,13 @@ class MsgHttp {
     var res = await Request().get(
       Api.msgFeedAt,
       queryParameters: {
-        'id': ?cursor,
-        'at_time': ?cursorTime,
         'platform': 'web',
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-      },
+        },
+        if (cursor != null) queryParams['id'] = cursor;
+        if (cursorTime != null) queryParams['at_time'] = cursorTime;
     );
     if (res.data['code'] == 0) {
       return Success(MsgAtData.fromJson(res.data['data']));
@@ -70,13 +70,13 @@ class MsgHttp {
     var res = await Request().get(
       Api.msgFeedLike,
       queryParameters: {
-        'id': ?cursor,
-        'like_time': ?cursorTime,
         'platform': 'web',
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-      },
+        },
+        if (cursor != null) queryParams['id'] = cursor;
+        if (cursorTime != null) queryParams['like_time'] = cursorTime;
     );
     if (res.data['code'] == 0) {
       return Success(MsgLikeData.fromJson(res.data['data']));
@@ -116,12 +116,12 @@ class MsgHttp {
     var res = await Request().get(
       Api.msgSysNotify,
       queryParameters: {
-        'cursor': ?cursor,
         'page_size': pageSize,
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-      },
+        },
+        if (cursor != null) queryParams['cursor'] = cursor;
     );
     if (res.data['code'] == 0) {
       return Success(
@@ -192,8 +192,8 @@ class MsgHttp {
       Api.uploadBfs,
       data: FormData.fromMap({
         'file_up': await MultipartFile.fromFile(path),
-        'category': ?category,
-        'biz': ?biz,
+        // REMOVED: 'category': ?category,
+        // REMOVED: 'biz': ?biz,
         'csrf': Accounts.main.csrf,
       }),
       cancelToken: cancelToken,
@@ -247,8 +247,8 @@ class MsgHttp {
       },
       data: {
         "dyn_id_str": dynIdStr,
-        "dyn_type": ?dynType,
-        "rid_str": ?ridStr,
+        // REMOVED: "dyn_type": ?dynType,
+        // REMOVED: "rid_str": ?ridStr,
       },
     );
     if (res.data['code'] == 0) {

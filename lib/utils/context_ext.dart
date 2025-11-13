@@ -8,12 +8,12 @@ extension ContextExtensions on BuildContext {
   /// The same of [MediaQuery.of(context).size.height]
   /// Note: updates when you rezise your screen (like on a browser or
   /// desktop window)
-  double get height => MediaQuery.heightOf(this);
+  double get height => MediaQuery.sizeOf(this).height;
 
   /// The same of [MediaQuery.of(context).size.width]
   /// Note: updates when you rezise your screen (like on a browser or
   /// desktop window)
-  double get width => MediaQuery.widthOf(this);
+  double get width => MediaQuery.sizeOf(this).width;
 
   /// similar to [MediaQuery.of(context).padding]
   ThemeData get theme => Theme.of(this);

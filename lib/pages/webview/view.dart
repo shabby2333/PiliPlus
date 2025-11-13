@@ -324,7 +324,7 @@ class _WebviewPageState extends State<WebviewPage> {
                 SnackBar snackBar = SnackBar(
                   content: const Text('当前网页将要打开外部链接，是否打开'),
                   showCloseIcon: true,
-                  persist: false,
+                  // persist: false, // Parameter removed in Flutter 3.32
                   action: SnackBarAction(
                     label: '打开',
                     onPressed: () => PageUtils.launchURL(url),

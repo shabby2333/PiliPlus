@@ -113,7 +113,7 @@ abstract class ThemeUtils {
         ),
       ),
       cupertinoOverrideTheme: CupertinoThemeData(
-        selectionHandleColor: colorScheme.primary,
+        // selectionHandleColor: // Removed in Flutter 3.32 colorScheme.primary,
       ),
       switchTheme: const SwitchThemeData(
         thumbIcon: WidgetStateProperty<Icon?>.fromMap(

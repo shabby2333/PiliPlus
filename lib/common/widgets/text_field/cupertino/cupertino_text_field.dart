@@ -1537,7 +1537,7 @@ class _CupertinoRichTextFieldState extends State<CupertinoRichTextField>
           children: <Widget>[
             // Insert a prefix at the front if the prefix visibility mode matches
             // the current text state.
-            ?prefixWidget,
+            if (prefixWidget != null) prefixWidget,
             // In the middle part, stack the placeholder on top of the main EditableText
             // if needed.
             Expanded(
@@ -1548,10 +1548,10 @@ class _CupertinoRichTextFieldState extends State<CupertinoRichTextField>
                 // See also https://github.com/flutter/flutter/issues/13715.
                 alignment: AlignmentDirectional.center,
                 textDirection: widget.textDirection,
-                children: <Widget>[?placeholder, editableText],
+                if (placeholder != null) placeholder,
               ),
             ),
-            ?suffixWidget,
+            if (suffixWidget != null) suffixWidget,
           ],
         );
       },

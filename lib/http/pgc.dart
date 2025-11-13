@@ -19,16 +19,17 @@ class PgcHttp {
     type,
     indexType,
   }) async {
+    var queryParams = {
+      ...params,
+      'page': page,
+      'pagesize': 21,
+    };
+    if (seasonType != null) queryParams['season_type'] = seasonType;
+    if (type != null) queryParams['type'] = type;
+    if (indexType != null) queryParams['index_type'] = indexType;
     var res = await Request().get(
       Api.pgcIndexResult,
-      queryParameters: {
-        ...params,
-        'season_type': ?seasonType,
-        'type': ?type,
-        'index_type': ?indexType,
-        'page': page,
-        'pagesize': 21,
-      },
+      queryParameters: queryParams,
     );
     if (res.data['code'] == 0) {
       return Success(PgcIndexResult.fromJson(res.data['data']));
@@ -42,13 +43,13 @@ class PgcHttp {
     type,
     indexType,
   }) async {
+    var queryParams = <String, dynamic>{};
+    if (seasonType != null) queryParams['season_type'] = seasonType;
+    if (type != null) queryParams['type'] = type;
+    if (indexType != null) queryParams['index_type'] = indexType;
     var res = await Request().get(
       Api.pgcIndexCondition,
-      queryParameters: {
-        'season_type': ?seasonType,
-        'type': ?type,
-        'index_type': ?indexType,
-      },
+      queryParameters: queryParams,
     );
     if (res.data['code'] == 0) {
       return Success(PgcIndexConditionData.fromJson(res.data['data']));
@@ -61,27 +62,28 @@ class PgcHttp {
     int? page,
     int? indexType,
   }) async {
+    var queryParams = {
+      'st': 1,
+      'order': 3,
+      'season_version': -1,
+      'spoken_language_type': -1,
+      'area': -1,
+      'is_finish': -1,
+      'copyright': -1,
+      'season_status': -1,
+      'season_month': -1,
+      'year': -1,
+      'style_id': -1,
+      'sort': 0,
+      'season_type': 1,
+      'pagesize': 20,
+      'type': 1,
+      'page': page,
+    };
+    if (indexType != null) queryParams['index_type'] = indexType;
     var res = await Request().get(
       Api.pgcIndexResult,
-      queryParameters: {
-        'st': 1,
-        'order': 3,
-        'season_version': -1,
-        'spoken_language_type': -1,
-        'area': -1,
-        'is_finish': -1,
-        'copyright': -1,
-        'season_status': -1,
-        'season_month': -1,
-        'year': -1,
-        'style_id': -1,
-        'sort': 0,
-        'season_type': 1,
-        'pagesize': 20,
-        'type': 1,
-        'page': page,
-        'index_type': ?indexType,
-      },
+      queryParameters: queryParams,
     );
     if (res.data['code'] == 0) {
       return Success(PgcIndexResult.fromJson(res.data['data']).list);
@@ -116,15 +118,16 @@ class PgcHttp {
     int sort = 0,
     String? next,
   }) async {
+    var queryParams = {
+      'media_id': mediaId,
+      'ps': 20,
+      'sort': sort,
+      'web_location': 666.19,
+    };
+    if (next != null) queryParams['cursor'] = next;
     var res = await Request().get(
       type.api,
-      queryParameters: {
-        'media_id': mediaId,
-        'ps': 20,
-        'sort': sort,
-        'cursor': ?next,
-        'web_location': 666.19,
-      },
+      queryParameters: queryParams,
     );
     if (res.data['code'] == 0) {
       return Success(PgcReviewData.fromJson(res.data['data']));

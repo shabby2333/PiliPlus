@@ -1532,7 +1532,7 @@ class VideoDetailController extends GetxController
         queryParameters: {
           'bvid': bvid,
           'graph_version': graphVersion,
-          'edge_id': ?edgeId,
+ if (edgeId != null) edgeId,
         },
       );
       if (res.data['code'] == 0) {
@@ -1958,7 +1958,7 @@ class VideoDetailController extends GetxController
     showDialog(
       context: Get.context!,
       builder: (context) => AlertDialog(
-        constraints: const BoxConstraints(maxWidth: 425, minWidth: 425),
+        // constraints: const BoxConstraints(maxWidth: 425, minWidth: 425), // Removed in Flutter 3.32
         title: const Text('播放地址'),
         content: Column(
           spacing: 20,
@@ -2030,7 +2030,7 @@ class VideoDetailController extends GetxController
         '/dlna',
         parameters: {
           'url': url,
-          'title': ?title,
+ if (title != null) title,
         },
       );
     } else {

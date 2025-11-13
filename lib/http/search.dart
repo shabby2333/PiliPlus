@@ -64,17 +64,17 @@ class SearchHttp {
       'keyword': keyword,
       'page': page,
       if (order?.isNotEmpty == true) 'order': order,
-      'duration': ?duration,
-      'tids': ?tids,
-      'order_sort': ?orderSort,
-      'user_type': ?userType,
-      'category_id': ?categoryId,
-      'pubtime_begin_s': ?pubBegin,
-      'pubtime_end_s': ?pubEnd,
+      // REMOVED: 'duration': ?duration,
+      // REMOVED: 'tids': ?tids,
+      // REMOVED: 'order_sort': ?orderSort,
+      // REMOVED: 'user_type': ?userType,
+      // REMOVED: 'category_id': ?categoryId,
+      // REMOVED: 'pubtime_begin_s': ?pubBegin,
+      // REMOVED: 'pubtime_end_s': ?pubEnd,
       'page_size': 20,
       'platform': 'pc',
       'web_location': 1430654,
-      'gaia_vtoken': ?gaiaVtoken,
+      // REMOVED: 'gaia_vtoken': ?gaiaVtoken,
     });
     var res = await Request().get(
       Api.searchByType,
@@ -149,13 +149,13 @@ class SearchHttp {
       'keyword': keyword,
       'page': page,
       if (order?.isNotEmpty == true) 'order': order,
-      'duration': ?duration,
-      'tids': ?tids,
-      'order_sort': ?orderSort,
-      'user_type': ?userType,
-      'category_id': ?categoryId,
-      'pubtime_begin_s': ?pubBegin,
-      'pubtime_end_s': ?pubEnd,
+      // REMOVED: 'duration': ?duration,
+      // REMOVED: 'tids': ?tids,
+      // REMOVED: 'order_sort': ?orderSort,
+      // REMOVED: 'user_type': ?userType,
+      // REMOVED: 'category_id': ?categoryId,
+      // REMOVED: 'pubtime_begin_s': ?pubBegin,
+      // REMOVED: 'pubtime_end_s': ?pubEnd,
     });
     var res = await Request().get(
       Api.searchAll,
@@ -182,9 +182,9 @@ class SearchHttp {
     var res = await Request().get(
       Api.ab2c,
       queryParameters: {
-        'aid': ?aid,
-        'bvid': ?bvid,
-      },
+        },
+        if (aid != null) queryParams['aid'] = aid;
+        if (bvid != null) queryParams['bvid'] = bvid;
     );
     if (res.data['code'] == 0) {
       if (res.data['data'] case List list) {
@@ -207,9 +207,9 @@ class SearchHttp {
     var res = await Request().get(
       Api.pgcInfo,
       queryParameters: {
-        'season_id': ?seasonId,
-        'ep_id': ?epId,
-      },
+        },
+        if (seasonId != null) queryParams['season_id'] = seasonId;
+        if (epId != null) queryParams['ep_id'] = epId;
     );
     if (res.data['code'] == 0) {
       return Success(PgcInfoModel.fromJson(res.data['result']));
@@ -225,9 +225,9 @@ class SearchHttp {
     var res = await Request().get(
       Api.pugvInfo,
       queryParameters: {
-        'season_id': ?seasonId,
-        'ep_id': ?epId,
-      },
+        },
+        if (seasonId != null) queryParams['season_id'] = seasonId;
+        if (epId != null) queryParams['ep_id'] = epId;
     );
     if (res.data['code'] == 0) {
       return Success(PgcInfoModel.fromJson(res.data['data']));
@@ -240,8 +240,8 @@ class SearchHttp {
     var res = await Request().get(
       Api.episodeInfo,
       queryParameters: {
-        'ep_id': ?epId,
-      },
+        },
+        if (epId != null) queryParams['ep_id'] = epId;
     );
     if (res.data['code'] == 0) {
       return Success(res.data['data']);

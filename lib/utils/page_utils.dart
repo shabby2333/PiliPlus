@@ -728,16 +728,16 @@ abstract class PageUtils {
       'aid': aid ?? IdUtils.bv2av(bvid!),
       'bvid': bvid ?? IdUtils.av2bv(aid!),
       'cid': cid,
-      'seasonId': ?seasonId,
-      'epId': ?epId,
-      'pgcType': ?pgcType,
-      'cover': ?cover,
-      'title': ?title,
-      'progress': ?progress,
       'videoType': videoType,
       'heroTag': Utils.makeHeroTag(cid),
-      ...?extraArguments,
+      if (extraArguments != null) ...extraArguments,
     };
+    if (seasonId != null) arguments['seasonId'] = seasonId;
+    if (epId != null) arguments['epId'] = epId;
+    if (pgcType != null) arguments['pgcType'] = pgcType;
+    if (cover != null) arguments['cover'] = cover;
+    if (title != null) arguments['title'] = title;
+    if (progress != null) arguments['progress'] = progress;
     if (off) {
       return Get.offNamed(
         '/videoV',

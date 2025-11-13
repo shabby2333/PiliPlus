@@ -183,7 +183,7 @@ class _NoteListPageState extends State<NoteListPage>
     return switch (loadingState) {
       Loading() => SliverPrototypeExtentList.builder(
         prototypeItem: const VideoReplySkeleton(),
-        itemBuilder: (_, _) => const VideoReplySkeleton(),
+        itemBuilder: (_, __) => const VideoReplySkeleton(),
         itemCount: 8,
       ),
       Success(:var response) =>

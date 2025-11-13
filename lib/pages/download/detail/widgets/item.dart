@@ -188,7 +188,7 @@ class DetailItem extends StatelessWidget {
                     ),
                   ValueListenableBuilder(
                     valueListenable: progress,
-                    builder: (_, _, _) {
+                    builder: (_, __, ___) {
                       final progress = GStorage.watchProgress.get(
                         cid.toString(),
                       );

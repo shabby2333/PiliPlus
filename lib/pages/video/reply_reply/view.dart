@@ -55,9 +55,9 @@ class VideoReplyReplyPanel extends CommonSlidePage {
       arguments: {
         'oid': oid,
         'rpid': rootId,
-        'id': ?rpId,
+ if (rpId != null) rpId,
         'type': type,
-        'enterUri': ?uri?.toString(), // save panel
+ if (uri != null) uri?.toString(), // save panel
       },
       () => Scaffold(
         resizeToAvoidBottomInset: false,
@@ -302,7 +302,7 @@ class _VideoReplyReplyPanelState extends State<VideoReplyReplyPanel>
     return switch (loadingState) {
       Loading() => SliverPrototypeExtentList.builder(
         prototypeItem: const VideoReplySkeleton(),
-        itemBuilder: (_, _) => const VideoReplySkeleton(),
+        itemBuilder: (_, __) => const VideoReplySkeleton(),
         itemCount: 8,
       ),
       Success(:var response!) => SuperSliverList.builder(

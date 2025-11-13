@@ -37,32 +37,33 @@ abstract final class LiveHttp {
     Object? emoticonOptions,
   }) async {
     String csrf = Accounts.main.csrf;
+    var dataMap = {
+      'bubble': 0,
+      'msg': msg,
+      'color': 16777215,
+      'mode': 1,
+      if (emoticonOptions != null)
+        'emoticonOptions': emoticonOptions
+      else ...{
+        'room_type': 0,
+        'jumpfrom': 0,
+        'reply_mid': 0,
+        'reply_attr': 0,
+        'replay_dmid': '',
+        'statistics': Constants.statistics,
+        'reply_type': 0,
+        'reply_uname': '',
+      },
+      'fontsize': 25,
+      'rnd': DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      'roomid': roomId,
+      'csrf': csrf,
+      'csrf_token': csrf,
+    };
+    if (dmType != null) dataMap['dm_type'] = dmType;
     var res = await Request().post(
       Api.sendLiveMsg,
-      data: FormData.fromMap({
-        'bubble': 0,
-        'msg': msg,
-        'color': 16777215,
-        'mode': 1,
-        'dm_type': ?dmType,
-        if (emoticonOptions != null)
-          'emoticonOptions': emoticonOptions
-        else ...{
-          'room_type': 0,
-          'jumpfrom': 0,
-          'reply_mid': 0,
-          'reply_attr': 0,
-          'replay_dmid': '',
-          'statistics': Constants.statistics,
-          'reply_type': 0,
-          'reply_uname': '',
-        },
-        'fontsize': 25,
-        'rnd': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-        'roomid': roomId,
-        'csrf': csrf,
-        'csrf_token': csrf,
-      }),
+      data: FormData.fromMap(dataMap),
     );
     if (res.data['code'] == 0) {
       return {
@@ -180,7 +181,6 @@ abstract final class LiveHttp {
     bool moduleSelect = false,
   }) async {
     final params = {
-      'access_key': ?recommend.accessKey,
       'appkey': Constants.appKey,
       'channel': 'master',
       'actionKey': 'appkey',
@@ -203,7 +203,8 @@ abstract final class LiveHttp {
       'scale': 2,
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-    };
+      };
+      if (recommend != null) params['access_key'] = recommend;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveFeedIndex,
@@ -257,12 +258,9 @@ abstract final class LiveHttp {
     String? sortType,
   }) async {
     final params = {
-      'access_key': ?recommend.accessKey,
       'appkey': Constants.appKey,
       'actionKey': 'appkey',
       'channel': 'master',
-      'area_id': ?areaId,
-      'parent_area_id': ?parentAreaId,
       'build': 8430300,
       'version': '8.43.0',
       'c_locale': 'zh_CN',
@@ -279,13 +277,16 @@ abstract final class LiveHttp {
       'page_size': 20,
       'platform': 'android',
       'qn': 0,
-      'sort_type': ?sortType,
       'tag_version': 1,
       's_locale': 'zh_CN',
       'scale': 2,
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-    };
+      };
+      if (recommend != null) params['access_key'] = recommend;
+      if (areaId != null) params['area_id'] = areaId;
+      if (parentAreaId != null) params['parent_area_id'] = parentAreaId;
+      if (sortType != null) params['sort_type'] = sortType;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveSecondList,
@@ -317,7 +318,6 @@ abstract final class LiveHttp {
 
   static Future<LoadingState<List<AreaList>?>> liveAreaList() async {
     final params = {
-      'access_key': ?recommend.accessKey,
       'appkey': Constants.appKey,
       'actionKey': 'appkey',
       'build': 8430300,
@@ -331,7 +331,8 @@ abstract final class LiveHttp {
       's_locale': 'zh_CN',
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-    };
+      };
+      if (recommend != null) params['access_key'] = recommend;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveAreaList,
@@ -350,7 +351,6 @@ abstract final class LiveHttp {
 
   static Future<LoadingState<List<AreaItem>>> getLiveFavTag() async {
     final params = {
-      'access_key': ?Accounts.main.accessKey,
       'appkey': Constants.appKey,
       'actionKey': 'appkey',
       'build': 8430300,
@@ -364,7 +364,8 @@ abstract final class LiveHttp {
       's_locale': 'zh_CN',
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-    };
+      };
+      if (Accounts != null) params['access_key'] = Accounts;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.getLiveFavTag,
@@ -421,7 +422,6 @@ abstract final class LiveHttp {
     required Object parentid,
   }) async {
     final params = {
-      'access_key': ?recommend.accessKey,
       'appkey': Constants.appKey,
       'actionKey': 'appkey',
       'build': 8430300,
@@ -438,7 +438,8 @@ abstract final class LiveHttp {
       's_locale': 'zh_CN',
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-    };
+      };
+      if (recommend != null) params['access_key'] = recommend;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveRoomAreaList,
@@ -459,7 +460,6 @@ abstract final class LiveHttp {
     required LiveSearchType type,
   }) async {
     final params = {
-      'access_key': ?recommend.accessKey,
       'appkey': Constants.appKey,
       'actionKey': 'appkey',
       'build': 8430300,
@@ -477,7 +477,8 @@ abstract final class LiveHttp {
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
       'type': type.name,
-    };
+      };
+      if (recommend != null) params['access_key'] = recommend;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveSearch,

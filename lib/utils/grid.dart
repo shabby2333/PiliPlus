@@ -11,7 +11,7 @@ mixin GridMixin<T extends StatefulWidget> on State<T> {
 
   Widget get gridSkeleton => SliverGrid.builder(
     gridDelegate: gridDelegate,
-    itemBuilder: (_, _) => const VideoCardHSkeleton(),
+    itemBuilder: (_, __) => const VideoCardHSkeleton(),
     itemCount: 10,
   );
 }

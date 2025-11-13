@@ -36,16 +36,18 @@ abstract final class DanmakuHttp {
       'mode': mode,
       //'aid': aid,
       'bvid': bvid,
-      'progress': ?progress,
-      'color': ?colorful ? 16777215 : color,
-      'fontsize': ?fontsize,
-      'pool': ?pool,
       'rnd': DateTime.now().microsecondsSinceEpoch,
-      'colorful': ?colorful ? 60001 : null,
-      'checkbox_type': ?checkboxType,
       'csrf': Accounts.main.csrf,
       // 'access_key': access_key,
     };
+    if (progress != null) data['progress'] = progress;
+    if (color != null) {
+      data['color'] = colorful ? 16777215 : color;
+    }
+    if (fontsize != null) data['fontsize'] = fontsize;
+    if (pool != null) data['pool'] = pool;
+    if (colorful) data['colorful'] = 60001;
+    if (checkboxType != null) data['checkbox_type'] = checkboxType;
 
     final res = await Request().post(
       Api.shootDanmaku,
@@ -102,7 +104,6 @@ abstract final class DanmakuHttp {
       'reason': reason,
       'block': block,
       'originCid': cid,
-      'content': ?content,
       'polaris_app_id': 100,
       'polaris_platform': 5,
       'spmid': '333.788.0.0',
@@ -110,6 +111,7 @@ abstract final class DanmakuHttp {
       'statistics': '{"appId":100,"platform":5,"abtest":"","version":""}',
       'csrf': Accounts.main.csrf,
     };
+    if (content != null) data['content'] = content;
     final res = await Request().post(
       Api.danmakuReport,
       data: data,

@@ -192,8 +192,8 @@ class DynamicsHttp {
           },
           if (privatePub != null || replyOption != null || publishTime != null)
             "option": {
-              'private_pub': ?privatePub,
-              "timer_pub_time": ?publishTime,
+              // REMOVED: 'private_pub': ?privatePub,
+              // REMOVED: "timer_pub_time": ?publishTime,
               if (replyOption == ReplyOptionType.close)
                 "close_comment": 1
               else if (replyOption == ReplyOptionType.choose)
@@ -206,7 +206,7 @@ class DynamicsHttp {
               : pics != null
               ? 2
               : 1,
-          'pics': ?pics,
+          // REMOVED: 'pics': ?pics,
           "attach_card": attachCard,
           "upload_id":
               "${rid != null ? 0 : mid}_${DateTime.now().millisecondsSinceEpoch ~/ 1000}_${Utils.random.nextInt(9000) + 1000}",
@@ -223,7 +223,7 @@ class DynamicsHttp {
         },
         if (dynIdStr != null || rid != null)
           "web_repost_src": {
-            "dyn_id_str": ?dynIdStr,
+            // REMOVED: "dyn_id_str": ?dynIdStr,
             if (rid != null)
               "revs_id": {
                 "dyn_type": dynType,
@@ -256,16 +256,16 @@ class DynamicsHttp {
       Api.dynamicDetail,
       queryParameters: {
         'timezone_offset': -480,
-        'id': ?id,
-        'rid': ?rid,
-        'type': ?type,
         'features': 'itemOpusStyle',
         'gaia_source': 'Athena',
         'web_location': '333.1330',
         'x-bili-device-req-json':
             '{"platform":"web","device":"pc","spmid":"333.1330"}',
         if (!clearCookie && Accounts.main.isLogin) 'csrf': Accounts.main.csrf,
-      },
+        },
+        if (id != null) queryParams['id'] = id;
+        if (rid != null) queryParams['rid'] = rid;
+        if (type != null) queryParams['type'] = type;
       options: clearCookie ? ReplyHttp.options : null,
     );
     if (res.data['code'] == 0) {

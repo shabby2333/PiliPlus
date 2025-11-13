@@ -59,26 +59,25 @@ Future<void> showMemberReportDialog(
                 ),
               ),
               const Text('举报理由（单选，非必选）'),
-              Builder(
-                builder: (context) => RadioGroup<int>(
-                  onChanged: (v) {
-                    reasonV2 = v;
-                    (context as Element).markNeedsBuild();
-                  },
-                  groupValue: reasonV2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      5,
-                      (index) => RadioListTile<int>(
-                        toggleable: true,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        contentPadding: const EdgeInsets.only(left: 4),
-                        dense: true,
-                        value: index,
-                        title: Text(
-                          const ['色情低俗', '不实信息', '违禁', '人身攻击', '赌博诈骗'][index],
-                        ),
+              StatefulBuilder(
+                builder: (context, setState) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    5,
+                    (index) => RadioListTile<int>(
+                      toggleable: true,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding: const EdgeInsets.only(left: 4),
+                      dense: true,
+                      value: index,
+                      groupValue: reasonV2,
+                      onChanged: (v) {
+                        setState(() {
+                          reasonV2 = v;
+                        });
+                      },
+                      title: Text(
+                        const ['色情低俗', '不实信息', '违禁', '人身攻击', '赌博诈骗'][index],
                       ),
                     ),
                   ),

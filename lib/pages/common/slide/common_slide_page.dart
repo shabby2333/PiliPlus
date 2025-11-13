@@ -1,7 +1,6 @@
 import 'dart:math' show max;
 
 import 'package:PiliPlus/utils/storage_pref.dart';
-import 'package:flutter/gestures.dart' show PositionedGestureDetails;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -80,7 +79,7 @@ mixin CommonSlideMixin<T extends CommonSlidePage> on State<T>, TickerProvider {
     isSliding = null;
   }
 
-  void onPan(PositionedGestureDetails details) {
+  void onPan(DragUpdateDetails details) {
     final localPosition = details.localPosition;
     if (isSliding == false) {
       return;

@@ -377,9 +377,9 @@ class FavHttp {
       queryParameters: {
         'vmid': mid,
         'type': type,
-        'follow_status': ?followStatus,
         'pn': pn,
-      },
+        },
+        if (followStatus != null) queryParams['follow_status'] = followStatus;
     );
     if (res.data['code'] == 0) {
       return Success(FavPgcData.fromJson(res.data['data']));
@@ -513,7 +513,7 @@ class FavHttp {
         'privacy': privacy,
         'cover': cover.isNotEmpty ? Uri.encodeFull(cover) : cover,
         'csrf': Accounts.main.csrf,
-        'media_id': ?mediaId,
+        // REMOVED: 'media_id': ?mediaId,
       },
       options: Options(
         contentType: Headers.formUrlEncodedContentType,
@@ -689,9 +689,9 @@ class FavHttp {
           ? Api.copyToview
           : Api.moveToview,
       data: {
-        'src_media_id': ?srcMediaId,
+        // REMOVED: 'src_media_id': ?srcMediaId,
         'tar_media_id': tarMediaId,
-        'mid': ?mid,
+        // REMOVED: 'mid': ?mid,
         'resources': resources,
         'platform': 'web',
         'csrf': Accounts.main.csrf,
@@ -728,8 +728,8 @@ class FavHttp {
       queryParameters: {
         'up_mid': mid,
         'rid': rid,
-        'type': ?type,
-      },
+        },
+        if (type != null) queryParams['type'] = type;
     );
     if (res.data['code'] == 0) {
       return Success(FavFolderData.fromJson(res.data['data']));

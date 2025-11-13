@@ -52,13 +52,13 @@ mixin DynMixin {
     if (GlobalData().dynamicsWaterfallFlow) {
       return SliverGrid.builder(
         gridDelegate: skeDelegate,
-        itemBuilder: (_, _) => const DynamicCardSkeleton(),
+        itemBuilder: (_, __) => const DynamicCardSkeleton(),
         itemCount: 10,
       );
     }
     return SliverPrototypeExtentList.builder(
       prototypeItem: const DynamicCardSkeleton(),
-      itemBuilder: (_, _) => const DynamicCardSkeleton(),
+      itemBuilder: (_, __) => const DynamicCardSkeleton(),
       itemCount: 10,
     );
   }

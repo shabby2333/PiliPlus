@@ -1331,10 +1331,10 @@ class _RenderListTile extends RenderBox
   Iterable<RenderBox> get children {
     final RenderBox? title = childForSlot(_ListTileSlot.title);
     return <RenderBox>[
-      ?leading,
-      ?title,
-      ?subtitle,
-      ?trailing,
+      if (leading != null) leading!,
+      if (title != null) title,
+      if (subtitle != null) subtitle!,
+      if (trailing != null) trailing!,
     ];
   }
 

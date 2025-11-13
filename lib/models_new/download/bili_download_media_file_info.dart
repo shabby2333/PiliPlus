@@ -94,7 +94,7 @@ class Type1 extends BiliDownloadMediaInfo {
     'available_period_milli': availablePeriodMilli,
     'description': description,
     'format': format,
-    'from': ?from,
+ if (from != null) 'from': from,
     'intact': intact,
     'is_downloaded': isDownloaded,
     'is_resolved': isResolved,
@@ -109,9 +109,9 @@ class Type1 extends BiliDownloadMediaInfo {
     'quality': quality,
     'segment_list': segmentList.map((e) => e.toJson()).toList(),
     'time_length': timeLength,
-    'type_tag': ?typeTag,
-    'user_agent': ?userAgent,
-    'referer': ?referer,
+ if (typeTag != null) 'type_tag': typeTag,
+ if (userAgent != null) 'user_agent': userAgent,
+ if (referer != null) 'referer': referer,
     'video_codec_id': videoCodecId,
     'video_project': videoProject,
   };
@@ -215,9 +215,9 @@ class Type2 extends BiliDownloadMediaInfo {
   Map<String, dynamic> toJson() => <String, dynamic>{
     'duration': duration,
     'video': video.map((e) => e.toJson()).toList(),
-    'audio': ?audio?.map((e) => e.toJson()).toList(),
-    'user_agent': ?userAgent,
-    'referer': ?referer,
+ if (audio != null) audio?.map((e) => e.toJson()).toList(),
+ if (userAgent != null) 'user_agent': userAgent,
+ if (referer != null) 'referer': referer,
   };
 }
 
@@ -268,7 +268,7 @@ class Type2File {
   Map<String, dynamic> toJson() => <String, dynamic>{
     'id': id,
     'base_url': baseUrl,
-    'backup_url': ?backupUrl,
+ if (backupUrl != null) 'backup_url': backupUrl,
     'bandwidth': bandwidth,
     'codecid': codecid,
     'size': size,

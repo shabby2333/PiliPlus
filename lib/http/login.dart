@@ -115,9 +115,6 @@ class LoginHttp {
       'cid': cid,
       // if (deviceTouristId != null) 'device_tourist_id': deviceTouristId,
       'disable_rcmd': '0',
-      'gee_challenge': ?geeChallenge,
-      'gee_seccode': ?geeSeccode,
-      'gee_validate': ?geeValidate,
       'local_id': buvid,
       // https://chinggg.github.io/post/appre/
       'login_session_id': md5
@@ -125,12 +122,15 @@ class LoginHttp {
           .toString(),
       'mobi_app': 'android_hd',
       'platform': 'android',
-      'recaptcha_token': ?recaptchaToken,
       's_locale': 'zh_CN',
       'statistics': Constants.statistics,
       'tel': tel,
       'ts': (timestamp ~/ 1000).toString(),
     };
+    if (geeChallenge != null) data['gee_challenge'] = geeChallenge;
+    if (geeSeccode != null) data['gee_seccode'] = geeSeccode;
+    if (geeValidate != null) data['gee_validate'] = geeValidate;
+    if (recaptchaToken != null) data['recaptcha_token'] = recaptchaToken;
     AppSign.appSign(data);
 
     var res = await Request().post(
@@ -228,20 +228,20 @@ class LoginHttp {
       ),
       'from_pv': 'main.homepage.avatar-nologin.all.click',
       'from_url': Uri.encodeComponent('bilibili://pegasus/promo'),
-      'gee_challenge': ?geeChallenge,
-      'gee_seccode': ?geeSeccode,
-      'gee_validate': ?geeValidate,
       'local_id': buvid, //LoginUtils.generateBuvid(),
       'mobi_app': 'android_hd',
       'password': passwordEncrypted,
       'permission': 'ALL',
       'platform': 'android',
-      'recaptcha_token': ?recaptchaToken,
       's_locale': 'zh_CN',
       'statistics': Constants.statistics,
       'ts': (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString(),
       'username': username,
     };
+    if (geeChallenge != null) data['gee_challenge'] = geeChallenge;
+    if (geeSeccode != null) data['gee_seccode'] = geeSeccode;
+    if (geeValidate != null) data['gee_validate'] = geeValidate;
+    if (recaptchaToken != null) data['recaptcha_token'] = recaptchaToken;
     AppSign.appSign(data);
     var res = await Request().post(
       Api.loginByPwdApi,
@@ -384,11 +384,11 @@ class LoginHttp {
       'disable_rcmd': '0',
       'sms_type': smsType ?? 'loginTelCheck',
       'tmp_code': tmpCode,
-      'gee_challenge': ?geeChallenge,
-      'gee_seccode': ?geeSeccode,
-      'gee_validate': ?geeValidate,
-      'recaptcha_token': ?recaptchaToken,
     };
+    if (geeChallenge != null) data['gee_challenge'] = geeChallenge;
+    if (geeSeccode != null) data['gee_seccode'] = geeSeccode;
+    if (geeValidate != null) data['gee_validate'] = geeValidate;
+    if (recaptchaToken != null) data['recaptcha_token'] = recaptchaToken;
     AppSign.appSign(data);
     var res = await Request().post(
       Api.safeCenterSmsCode,

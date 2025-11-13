@@ -463,7 +463,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             )
           else
-            ?widget,
+            if (widget != null) widget,
           if (needIcon)
             Icon(
               Icons.keyboard_arrow_right,
