@@ -200,10 +200,6 @@ class VideoHttp {
     String? language,
   }) async {
     final params = await WbiSign.makSign({
-      // REMOVED: 'avid': ?avid,
-      // REMOVED: 'bvid': ?bvid,
-      // REMOVED: 'ep_id': ?epid,
-      // REMOVED: 'season_id': ?seasonId,
       'cid': cid,
       'qn': qn ?? 80,
       // 获取所有格式的视频
@@ -216,7 +212,11 @@ class VideoHttp {
       'web_location': 1315873,
       // 免登录查看1080p
       if (tryLook) 'try_look': 1,
-      // REMOVED: 'cur_language': ?language,
+      if (avid != null) 'avid': avid,
+      if (bvid != null) 'bvid': bvid,
+      if (epid != null) 'ep_id': epid,
+      if (seasonId != null) 'season_id': seasonId,
+      if (language != null) 'cur_language': language,
     });
 
     try {
@@ -654,9 +654,9 @@ class VideoHttp {
     await Request().post(
       Api.historyReport,
       data: {
-        // REMOVED: 'aid': ?aid,
-        // REMOVED: 'type': ?type,
         'csrf': Accounts.heartbeat.csrf,
+        if (aid != null) 'aid': aid,
+        if (type != null) 'type': type,
       },
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
@@ -845,11 +845,11 @@ class VideoHttp {
     var res = await Request().get(
       Api.playInfo,
       queryParameters: await WbiSign.makSign({
-        // REMOVED: 'aid': ?aid,
-        // REMOVED: 'bvid': ?bvid,
         'cid': cid,
-        // REMOVED: 'season_id': ?seasonId,
-        // REMOVED: 'ep_id': ?epId,
+        if (aid != null) 'aid': aid,
+        if (bvid != null) 'bvid': bvid,
+        if (seasonId != null) 'season_id': seasonId,
+        if (epId != null) 'ep_id': epId,
       }),
     );
     if (res.data['code'] == 0) {

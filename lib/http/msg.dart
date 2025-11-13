@@ -192,9 +192,9 @@ class MsgHttp {
       Api.uploadBfs,
       data: FormData.fromMap({
         'file_up': await MultipartFile.fromFile(path),
-        // REMOVED: 'category': ?category,
-        // REMOVED: 'biz': ?biz,
         'csrf': Accounts.main.csrf,
+        if (category != null) 'category': category,
+        if (biz != null) 'biz': biz,
       }),
       cancelToken: cancelToken,
     );
@@ -247,8 +247,8 @@ class MsgHttp {
       },
       data: {
         "dyn_id_str": dynIdStr,
-        // REMOVED: "dyn_type": ?dynType,
-        // REMOVED: "rid_str": ?ridStr,
+        if (dynType != null) "dyn_type": dynType,
+        if (ridStr != null) "rid_str": ridStr,
       },
     );
     if (res.data['code'] == 0) {

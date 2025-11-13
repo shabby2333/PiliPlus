@@ -198,13 +198,14 @@ abstract final class LiveHttp {
       'network': 'wifi',
       'page': pn,
       'platform': 'android',
-      if (recommend.isLogin) 'relation_page': 1,
+      if (Accounts.main.isLogin) 'relation_page': 1,
       's_locale': 'zh_CN',
       'scale': 2,
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      };
-      if (recommend != null) params['access_key'] = recommend;
+    };
+    final accessKey = Accounts.main.accessKey;
+    if (accessKey != null) params['access_key'] = accessKey;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveFeedIndex,
@@ -282,9 +283,10 @@ abstract final class LiveHttp {
       'scale': 2,
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      };
-      if (recommend != null) params['access_key'] = recommend;
-      if (areaId != null) params['area_id'] = areaId;
+    };
+    final accessKey = Accounts.main.accessKey;
+    if (accessKey != null) params['access_key'] = accessKey;
+    if (areaId != null) params['area_id'] = areaId;
       if (parentAreaId != null) params['parent_area_id'] = parentAreaId;
       if (sortType != null) params['sort_type'] = sortType;
     AppSign.appSign(params);
@@ -331,8 +333,9 @@ abstract final class LiveHttp {
       's_locale': 'zh_CN',
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      };
-      if (recommend != null) params['access_key'] = recommend;
+    };
+    final accessKey = Accounts.main.accessKey;
+    if (accessKey != null) params['access_key'] = accessKey;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveAreaList,
@@ -364,8 +367,9 @@ abstract final class LiveHttp {
       's_locale': 'zh_CN',
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      };
-      if (Accounts != null) params['access_key'] = Accounts;
+    };
+    final accessKey = Accounts.main.accessKey;
+    if (accessKey != null) params['access_key'] = accessKey;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.getLiveFavTag,
@@ -438,8 +442,9 @@ abstract final class LiveHttp {
       's_locale': 'zh_CN',
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      };
-      if (recommend != null) params['access_key'] = recommend;
+    };
+    final accessKey = Accounts.main.accessKey;
+    if (accessKey != null) params['access_key'] = accessKey;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveRoomAreaList,
@@ -477,8 +482,9 @@ abstract final class LiveHttp {
       'statistics': Constants.statisticsApp,
       'ts': DateTime.now().millisecondsSinceEpoch ~/ 1000,
       'type': type.name,
-      };
-      if (recommend != null) params['access_key'] = recommend;
+    };
+    final accessKey = Accounts.main.accessKey;
+    if (accessKey != null) params['access_key'] = accessKey;
     AppSign.appSign(params);
     var res = await Request().get(
       Api.liveSearch,

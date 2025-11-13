@@ -157,9 +157,9 @@ class UserHttp {
     var res = await Request().post(
       Api.toViewLater,
       data: {
-        // REMOVED: 'aid': ?aid,
-        // REMOVED: 'bvid': ?bvid,
         'csrf': Accounts.main.csrf,
+        if (aid != null) 'aid': aid,
+        if (bvid != null) 'bvid': bvid,
       },
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
@@ -212,8 +212,8 @@ class UserHttp {
     var res = await Request().post(
       Api.toViewClear,
       data: {
-        // REMOVED: 'clean_type': ?cleanType,
         'csrf': Accounts.main.csrf,
+        if (cleanType != null) 'clean_type': cleanType,
       },
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );

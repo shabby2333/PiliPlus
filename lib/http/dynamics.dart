@@ -192,8 +192,8 @@ class DynamicsHttp {
           },
           if (privatePub != null || replyOption != null || publishTime != null)
             "option": {
-              // REMOVED: 'private_pub': ?privatePub,
-              // REMOVED: "timer_pub_time": ?publishTime,
+              if (privatePub != null) 'private_pub': privatePub,
+              if (publishTime != null) "timer_pub_time": publishTime,
               if (replyOption == ReplyOptionType.close)
                 "close_comment": 1
               else if (replyOption == ReplyOptionType.choose)
@@ -206,7 +206,7 @@ class DynamicsHttp {
               : pics != null
               ? 2
               : 1,
-          // REMOVED: 'pics': ?pics,
+          if (pics != null) 'pics': pics,
           "attach_card": attachCard,
           "upload_id":
               "${rid != null ? 0 : mid}_${DateTime.now().millisecondsSinceEpoch ~/ 1000}_${Utils.random.nextInt(9000) + 1000}",
@@ -223,7 +223,7 @@ class DynamicsHttp {
         },
         if (dynIdStr != null || rid != null)
           "web_repost_src": {
-            // REMOVED: "dyn_id_str": ?dynIdStr,
+            if (dynIdStr != null) "dyn_id_str": dynIdStr,
             if (rid != null)
               "revs_id": {
                 "dyn_type": dynType,

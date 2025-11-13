@@ -513,7 +513,7 @@ class FavHttp {
         'privacy': privacy,
         'cover': cover.isNotEmpty ? Uri.encodeFull(cover) : cover,
         'csrf': Accounts.main.csrf,
-        // REMOVED: 'media_id': ?mediaId,
+        if (mediaId != null) 'media_id': mediaId,
       },
       options: Options(
         contentType: Headers.formUrlEncodedContentType,
@@ -689,12 +689,12 @@ class FavHttp {
           ? Api.copyToview
           : Api.moveToview,
       data: {
-        // REMOVED: 'src_media_id': ?srcMediaId,
         'tar_media_id': tarMediaId,
-        // REMOVED: 'mid': ?mid,
         'resources': resources,
         'platform': 'web',
         'csrf': Accounts.main.csrf,
+        if (srcMediaId != null) 'src_media_id': srcMediaId,
+        if (mid != null) 'mid': mid,
       },
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
