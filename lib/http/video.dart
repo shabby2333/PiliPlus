@@ -477,9 +477,9 @@ class VideoHttp {
         'id': id,
         'build': 1,
         'mobi_app': 'android',
-        },
-        if (reasonId != null) queryParams['reason_id'] = reasonId;
-        if (feedbackId != null) queryParams['feedback_id'] = feedbackId;
+        if (reasonId != null) 'reason_id': reasonId,
+        if (feedbackId != null) 'feedback_id': feedbackId,
+      },
     );
     if (res.data['code'] == 0) {
       return {'status': true};
@@ -505,9 +505,9 @@ class VideoHttp {
         'id': id,
         'build': 1,
         'mobi_app': 'android',
-        },
-        if (reasonId != null) queryParams['reason_id'] = reasonId;
-        if (feedbackId != null) queryParams['feedback_id'] = feedbackId;
+        if (reasonId != null) 'reason_id': reasonId,
+        if (feedbackId != null) 'feedback_id': feedbackId,
+      },
     );
     if (res.data['code'] == 0) {
       return {'status': true};
@@ -1001,8 +1001,8 @@ class VideoHttp {
         'oid_type': 0,
         'pn': page,
         'ps': 10,
-        },
-        if (uperMid != null) queryParams['uper_mid'] = uperMid;
+        if (uperMid != null) 'uper_mid': uperMid,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(VideoNoteData.fromJson(res.data['data']));

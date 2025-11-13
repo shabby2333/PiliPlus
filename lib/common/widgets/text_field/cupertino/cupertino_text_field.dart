@@ -1548,7 +1548,9 @@ class _CupertinoRichTextFieldState extends State<CupertinoRichTextField>
                 // See also https://github.com/flutter/flutter/issues/13715.
                 alignment: AlignmentDirectional.center,
                 textDirection: widget.textDirection,
-                if (placeholder != null) placeholder,
+                children: [
+                  if (placeholder != null) placeholder,
+                ],
               ),
             ),
             if (suffixWidget != null) suffixWidget,

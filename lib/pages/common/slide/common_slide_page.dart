@@ -103,6 +103,11 @@ mixin CommonSlideMixin<T extends CommonSlidePage> on State<T>, TickerProvider {
     }
   }
 
+  void onPanStart(DragStartDetails details) {
+    // Called when pan gesture starts
+    // Keep downPos from onPanDown
+  }
+
   void onPanDown(DragDownDetails details) {
     final dx = details.localPosition.dx;
     const offset = 30;
@@ -118,7 +123,7 @@ mixin CommonSlideMixin<T extends CommonSlidePage> on State<T>, TickerProvider {
 
   Widget slideList(ThemeData theme) => GestureDetector(
     onPanDown: onPanDown,
-    onPanStart: onPan,
+    onPanStart: onPanStart,
     onPanUpdate: onPan,
     onPanCancel: onDismiss,
     onPanEnd: onDismiss,

@@ -1532,7 +1532,7 @@ class VideoDetailController extends GetxController
         queryParameters: {
           'bvid': bvid,
           'graph_version': graphVersion,
- if (edgeId != null) edgeId,
+          if (edgeId != null) 'edge_id': edgeId,
         },
       );
       if (res.data['code'] == 0) {
@@ -2030,7 +2030,7 @@ class VideoDetailController extends GetxController
         '/dlna',
         parameters: {
           'url': url,
- if (title != null) title,
+          if (title != null) 'title': title,
         },
       );
     } else {

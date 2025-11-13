@@ -745,27 +745,28 @@ class LoginPageController extends GetxController
           right: 16,
           bottom: 10,
         ),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: AccountType.values
-                .map(
-                  (e) => Builder(
-                    builder: (context) => RadioGroup(
-                      groupValue: selectAccount[e.index],
-                      onChanged: (v) {
-                        selectAccount[e.index] = v!;
-                        (context as Element).markNeedsBuild();
-                      },
-                      child: WrapRadioOptionsGroup<Account>(
+        content: StatefulBuilder(
+          builder: (context, setState) {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: AccountType.values
+                    .map(
+                      (e) => WrapRadioOptionsGroup<Account>(
                         groupTitle: e.title,
                         options: options,
+                        groupValue: selectAccount[e.index],
+                        onChanged: (v) {
+                          setState(() {
+                            selectAccount[e.index] = v!;
+                          });
+                        },
                       ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
+                    )
+                    .toList(),
+              ),
+            );
+          },
         ),
         actions: [
           TextButton(

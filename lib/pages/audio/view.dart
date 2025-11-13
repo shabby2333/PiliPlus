@@ -43,15 +43,15 @@ class AudioPage extends StatefulWidget {
   }) => Get.toNamed(
     '/audio',
     arguments: {
- if (id != null) id,
+      if (id != null) 'id': id,
       'oid': oid,
- if (subId != null) subId,
+      if (subId != null) 'subId': subId,
       'from': from,
       'itemType': itemType,
- if (heroTag != null) heroTag,
- if (start != null) start,
- if (audioUrl != null) audioUrl,
- if (extraId != null) extraId,
+      if (heroTag != null) 'heroTag': heroTag,
+      if (start != null) 'start': start,
+      if (audioUrl != null) 'audioUrl': audioUrl,
+      if (extraId != null) 'extraId': extraId,
     },
   );
 }

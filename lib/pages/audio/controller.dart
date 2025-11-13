@@ -252,7 +252,7 @@ class AudioController extends GetxController
         start: _start,
         httpHeaders: {
           'user-agent': ua,
- if (referer != null) referer,
+          if (referer != null) 'referer': referer,
         },
       ),
     );

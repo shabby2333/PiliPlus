@@ -182,9 +182,9 @@ class SearchHttp {
     var res = await Request().get(
       Api.ab2c,
       queryParameters: {
-        },
-        if (aid != null) queryParams['aid'] = aid;
-        if (bvid != null) queryParams['bvid'] = bvid;
+        if (aid != null) 'aid': aid,
+        if (bvid != null) 'bvid': bvid,
+      },
     );
     if (res.data['code'] == 0) {
       if (res.data['data'] case List list) {
@@ -207,9 +207,9 @@ class SearchHttp {
     var res = await Request().get(
       Api.pgcInfo,
       queryParameters: {
-        },
-        if (seasonId != null) queryParams['season_id'] = seasonId;
-        if (epId != null) queryParams['ep_id'] = epId;
+        if (seasonId != null) 'season_id': seasonId,
+        if (epId != null) 'ep_id': epId,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(PgcInfoModel.fromJson(res.data['result']));
@@ -225,9 +225,9 @@ class SearchHttp {
     var res = await Request().get(
       Api.pugvInfo,
       queryParameters: {
-        },
-        if (seasonId != null) queryParams['season_id'] = seasonId;
-        if (epId != null) queryParams['ep_id'] = epId;
+        if (seasonId != null) 'season_id': seasonId,
+        if (epId != null) 'ep_id': epId,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(PgcInfoModel.fromJson(res.data['data']));
@@ -240,8 +240,8 @@ class SearchHttp {
     var res = await Request().get(
       Api.episodeInfo,
       queryParameters: {
-        },
-        if (epId != null) queryParams['ep_id'] = epId;
+        if (epId != null) 'ep_id': epId,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(res.data['data']);

@@ -308,9 +308,12 @@ class UserHttp {
     required String bvid,
     Object? cid,
   }) async {
+    Map<String, dynamic> queryParams = {};
+    if (cid != null) queryParams['cid'] = cid;
+    
     var res = await Request().get(
       Api.videoTags,
-      if (cid != null) cid,
+      queryParameters: queryParams,
     );
     if (res.data['code'] == 0) {
       return Success(
@@ -347,9 +350,9 @@ class UserHttp {
         'sort_field': sortField,
         'tid': 0,
         'with_current': withCurrent,
-        },
-        if (oid != null) queryParams['oid'] = oid;
-        if (otype != null) queryParams['otype'] = otype;
+        if (oid != null) 'oid': oid,
+        if (otype != null) 'otype': otype,
+      },
     );
     if (res.data['code'] == 0) {
       return {'status': true, 'data': MediaListData.fromJson(res.data['data'])};
@@ -532,8 +535,8 @@ class UserHttp {
         'web_location': 333.789,
         'x-bili-device-req-json':
             '{"platform":"web","device":"pc","spmid":"333.789"}',
-        },
-        if (pn != null) queryParams['pn'] = pn;
+        if (pn != null) 'pn': pn,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(FollowData.fromJson(res.data['data']));

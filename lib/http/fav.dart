@@ -378,8 +378,8 @@ class FavHttp {
         'vmid': mid,
         'type': type,
         'pn': pn,
-        },
-        if (followStatus != null) queryParams['follow_status'] = followStatus;
+        if (followStatus != null) 'follow_status': followStatus,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(FavPgcData.fromJson(res.data['data']));
@@ -728,8 +728,8 @@ class FavHttp {
       queryParameters: {
         'up_mid': mid,
         'rid': rid,
-        },
-        if (type != null) queryParams['type'] = type;
+        if (type != null) 'type': type,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(FavFolderData.fromJson(res.data['data']));

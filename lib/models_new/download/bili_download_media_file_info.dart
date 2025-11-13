@@ -215,9 +215,9 @@ class Type2 extends BiliDownloadMediaInfo {
   Map<String, dynamic> toJson() => <String, dynamic>{
     'duration': duration,
     'video': video.map((e) => e.toJson()).toList(),
- if (audio != null) audio?.map((e) => e.toJson()).toList(),
- if (userAgent != null) 'user_agent': userAgent,
- if (referer != null) 'referer': referer,
+    if (audio != null) 'audio': audio?.map((e) => e.toJson()).toList(),
+    if (userAgent != null) 'user_agent': userAgent,
+    if (referer != null) 'referer': referer,
   };
 }
 

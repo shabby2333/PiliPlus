@@ -262,10 +262,10 @@ class DynamicsHttp {
         'x-bili-device-req-json':
             '{"platform":"web","device":"pc","spmid":"333.1330"}',
         if (!clearCookie && Accounts.main.isLogin) 'csrf': Accounts.main.csrf,
-        },
-        if (id != null) queryParams['id'] = id;
-        if (rid != null) queryParams['rid'] = rid;
-        if (type != null) queryParams['type'] = type;
+        if (id != null) 'id': id,
+        if (rid != null) 'rid': rid,
+        if (type != null) 'type': type,
+      },
       options: clearCookie ? ReplyHttp.options : null,
     );
     if (res.data['code'] == 0) {

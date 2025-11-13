@@ -402,32 +402,33 @@ abstract class RequestUtils {
         showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              title: Text('${isCopy ? '复制' : '移动'}到'),
-              contentPadding: const EdgeInsets.only(top: 5),
-              content: SingleChildScrollView(
-                child: RadioGroup(
-                  onChanged: (value) {
-                    checkedId = value;
-                    (context as Element).markNeedsBuild();
-                  },
-                  groupValue: checkedId,
-                  child: Column(
-                    children: list.map((item) {
-                      return RadioListTile<int>(
-                        dense: true,
-                        title: Text(item.title),
-                        value: item.id,
-                      );
-                    }).toList(),
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  title: Text('${isCopy ? '复制' : '移动'}到'),
+                  contentPadding: const EdgeInsets.only(top: 5),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: list.map((item) {
+                        return RadioListTile<int>(
+                          dense: true,
+                          title: Text(item.title),
+                          value: item.id,
+                          groupValue: checkedId,
+                          onChanged: (value) {
+                            setState(() {
+                              checkedId = value;
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
                   ),
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: Get.back,
-                  child: Text(
-                    '取消',
+                  actions: [
+                    TextButton(
+                      onPressed: Get.back,
+                      child: Text(
+                        '取消',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.outline,
                     ),

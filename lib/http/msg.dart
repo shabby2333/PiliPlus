@@ -30,9 +30,9 @@ class MsgHttp {
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-        },
-        if (cursor != null) queryParams['id'] = cursor;
-        if (cursorTime != null) queryParams['reply_time'] = cursorTime;
+        if (cursor != null) 'id': cursor,
+        if (cursorTime != null) 'reply_time': cursorTime,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(MsgReplyData.fromJson(res.data['data']));
@@ -52,9 +52,9 @@ class MsgHttp {
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-        },
-        if (cursor != null) queryParams['id'] = cursor;
-        if (cursorTime != null) queryParams['at_time'] = cursorTime;
+        if (cursor != null) 'id': cursor,
+        if (cursorTime != null) 'at_time': cursorTime,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(MsgAtData.fromJson(res.data['data']));
@@ -74,9 +74,9 @@ class MsgHttp {
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-        },
-        if (cursor != null) queryParams['id'] = cursor;
-        if (cursorTime != null) queryParams['like_time'] = cursorTime;
+        if (cursor != null) 'id': cursor,
+        if (cursorTime != null) 'like_time': cursorTime,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(MsgLikeData.fromJson(res.data['data']));
@@ -120,8 +120,8 @@ class MsgHttp {
         'mobi_app': 'web',
         'build': 0,
         'web_location': 333.40164,
-        },
-        if (cursor != null) queryParams['cursor'] = cursor;
+        if (cursor != null) 'cursor': cursor,
+      },
     );
     if (res.data['code'] == 0) {
       return Success(

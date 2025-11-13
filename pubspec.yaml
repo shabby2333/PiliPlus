@@ -40,11 +40,8 @@ dependencies:
   # 动态取色
   dynamic_color: ^1.8.1
 
-  # get: ^4.7.2
-  get:
-    git:
-      url: https://github.com/bggRGjQaUbCoE/getx.git
-      ref: version_4.7.2
+  # 使用最新稳定版本以兼容 Flutter 3.32.8
+  get: ^4.7.2
 
   # 网络
   dio: ^5.7.0
@@ -192,7 +189,7 @@ dependencies:
   expandable: ^5.0.1
   flex_seed_scheme: ^3.4.1
   live_photo_maker: ^0.0.6
-  fl_chart: ^1.0.0
+  fl_chart: ^1.1.0
   synchronized: ^3.3.0
   # document_file_save_plus: ^2.0.0
   # webdav_client: ^1.2.2
