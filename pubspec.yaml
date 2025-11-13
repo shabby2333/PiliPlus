@@ -189,7 +189,7 @@ dependencies:
   expandable: ^5.0.1
   flex_seed_scheme: ^3.4.1
   live_photo_maker: ^0.0.6
-  fl_chart: ^1.1.0
+  # fl_chart: ^1.1.0  # 暂时禁用，Linux 平台与 vector_math 2.1.4 不兼容
   synchronized: ^3.3.0
   # document_file_save_plus: ^2.0.0
   # webdav_client: ^1.2.2

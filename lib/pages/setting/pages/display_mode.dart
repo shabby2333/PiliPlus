@@ -97,7 +97,6 @@ class _SetDisplayModeState extends State<SetDisplayMode> {
                   },
                 );
               },
-              ),
             ),
           ),
         ],

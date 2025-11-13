@@ -59,7 +59,7 @@ import 'package:PiliPlus/utils/utils.dart';
 import 'package:canvas_danmaku/canvas_danmaku.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_debounce/easy_throttle.dart';
-import 'package:fl_chart/fl_chart.dart';
+// import 'package:fl_chart/fl_chart.dart';  // 暂时禁用以兼容 Linux vector_math 2.1.4
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -2494,7 +2494,16 @@ Widget buildDmChart(
             ? 20.25 + offset
             : 4.25 + offset,
       ),
-      child: LineChart(
+      child: Center(
+        child: Text(
+          '弹幕趋势图暂不可用',
+          style: TextStyle(
+            color: color.withValues(alpha: 0.6),
+            fontSize: 10,
+          ),
+        ),
+      ),
+      /* child: LineChart(
         LineChartData(
           titlesData: const FlTitlesData(show: false),
           lineTouchData: const LineTouchData(enabled: false),
@@ -2524,7 +2533,7 @@ Widget buildDmChart(
             ),
           ],
         ),
-      ),
+      ), */
     ),
   );
 }

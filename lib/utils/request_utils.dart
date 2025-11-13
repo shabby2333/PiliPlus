@@ -429,50 +429,52 @@ abstract class RequestUtils {
                       onPressed: Get.back,
                       child: Text(
                         '取消',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.outline,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    if (checkedId != null) {
-                      Set removeList = ctr.allChecked.toSet();
-                      SmartDialog.showLoading();
-                      FavHttp.copyOrMoveFav(
-                        isCopy: isCopy,
-                        isFav: ctr is! LaterController,
-                        srcMediaId: mediaId,
-                        tarMediaId: checkedId,
-                        resources: removeList
-                            .map(
-                              (item) => ctr is LaterController
-                                  ? item.aid
-                                  : '${item.id}:${item.type}',
-                            )
-                            .join(','),
-                        mid: isCopy ? mid : null,
-                      ).then((res) {
-                        if (res.isSuccess) {
-                          ctr.handleSelect(checked: false);
-                          if (!isCopy) {
-                            ctr.loadingState
-                              ..value.data!.removeWhere(removeList.contains)
-                              ..refresh();
-                          }
-                          SmartDialog.dismiss();
-                          SmartDialog.showToast('${isCopy ? '复制' : '移动'}成功');
-                          Get.back();
-                        } else {
-                          SmartDialog.dismiss();
-                          res.toast();
+                    TextButton(
+                      onPressed: () {
+                        if (checkedId != null) {
+                          Set removeList = ctr.allChecked.toSet();
+                          SmartDialog.showLoading();
+                          FavHttp.copyOrMoveFav(
+                            isCopy: isCopy,
+                            isFav: ctr is! LaterController,
+                            srcMediaId: mediaId,
+                            tarMediaId: checkedId,
+                            resources: removeList
+                                .map(
+                                  (item) => ctr is LaterController
+                                      ? item.aid
+                                      : '${item.id}:${item.type}',
+                                )
+                                .join(','),
+                            mid: isCopy ? mid : null,
+                          ).then((res) {
+                            if (res.isSuccess) {
+                              ctr.handleSelect(checked: false);
+                              if (!isCopy) {
+                                ctr.loadingState
+                                  ..value.data!.removeWhere(removeList.contains)
+                                  ..refresh();
+                              }
+                              SmartDialog.dismiss();
+                              SmartDialog.showToast('${isCopy ? '复制' : '移动'}成功');
+                              Get.back();
+                            } else {
+                              SmartDialog.dismiss();
+                              res.toast();
+                            }
+                          });
                         }
-                      });
-                    }
-                  },
-                  child: const Text('确认'),
-                ),
-              ],
+                      },
+                      child: const Text('确认'),
+                    ),
+                  ],
+                );
+              },
             );
           },
         );
