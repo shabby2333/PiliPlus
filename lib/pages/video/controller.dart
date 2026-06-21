@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert' show jsonEncode;
 import 'dart:math' show min;
 import 'dart:ui';
 
@@ -1597,25 +1598,19 @@ class VideoDetailController extends GetxController
           'url': url,
           'title': title ?? '',
           'metadata': Uri.encodeQueryComponent(
-            _buildNvaMetadata(),
+            jsonEncode({
+              'aid': '$aid',
+              'cid': '${cid.value}',
+              'epid': '$epId',
+              'season_id': '$seasonId',
+              'oid': epId != null ? '$epId' : '$aid',
+              'content_type': 1,
+            }),
           ),
         },
       );
     } else {
       res.toast();
     }
-  }
-
-  /// 构建 NVA 协议的投屏元数据
-  String _buildNvaMetadata() {
-    final params = <String, String>{
-      'aid': '$aid',
-      'cid': '${cid.value}',
-      'epid': '$epId',
-      'season_id': '$seasonId',
-      'oid': epId != null ? '$epId' : '$aid',
-      'content_type': '1',
-    };
-    return Uri(queryParameters: params).query;
   }
 }

@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:PiliPlus/common/widgets/loading_widget/http_error.dart';
 import 'package:PiliPlus/common/widgets/loading_widget/loading_widget.dart';
 import 'package:PiliPlus/common/widgets/view_sliver_safe_area.dart';
+import 'package:PiliPlus/pages/dlna/cast/nva_cast_device.dart';
+import 'package:PiliPlus/pages/dlna/control/view.dart';
 import 'package:dlna_dart/dlna.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
 class DLNAPage extends StatefulWidget {
@@ -19,6 +23,7 @@ class _DLNAPageState extends State<DLNAPage> {
   final Map<String, DLNADevice> _deviceList = {};
   late final _url = Get.parameters['url']!;
   late final _title = Get.parameters['title'];
+  late final Map<String, dynamic>? _nvaMetadata;
 
   Timer? _timer;
   bool _isSearching = false;
@@ -28,6 +33,17 @@ class _DLNAPageState extends State<DLNAPage> {
   @override
   void initState() {
     super.initState();
+    final metaStr = Get.parameters['metadata'];
+    if (metaStr != null && metaStr.isNotEmpty) {
+      try {
+        final decoded = Uri.decodeQueryComponent(metaStr);
+        _nvaMetadata = jsonDecode(decoded) as Map<String, dynamic>;
+      } catch (_) {
+        _nvaMetadata = null;
+      }
+    } else {
+      _nvaMetadata = null;
+    }
     _onSearch(isInit: true);
   }
 
@@ -156,8 +172,45 @@ class _DLNAPageState extends State<DLNAPage> {
               _lastDevice = device;
               _lastDeviceKey = key;
               setState(() {});
-              await device.setUrl(_url, title: _title ?? '');
-              await device.play();
+
+              if (isNva && _nvaMetadata != null) {
+                // ---- NVA (小电视/哔哩必连) 投屏 ----
+                final host = Uri.parse(device.info.URLBase).host;
+                final nvaDevice = NvaCastDevice(
+                  uuid: device.info.URLBase,
+                  deviceName: device.info.friendlyName,
+                  host: host,
+                );
+                try {
+                  await nvaDevice.connect();
+                  if (!mounted) return;
+                  await nvaDevice.play(
+                    url: _url,
+                    title: _title ?? '',
+                    metadata: _nvaMetadata,
+                  );
+                  if (!mounted) return;
+                  Get.to(() => DlnaControlPage(
+                    nvaDevice: nvaDevice,
+                    title: _title ?? device.info.friendlyName,
+                    nvaMetadata: _nvaMetadata,
+                  ));
+                } catch (e) {
+                  if (mounted) {
+                    SmartDialog.showToast('NVA连接失败: $e');
+                  }
+                  nvaDevice.disconnect();
+                }
+              } else {
+                // ---- 标准 DLNA 投屏 ----
+                await device.setUrl(_url, title: _title ?? '');
+                await device.play();
+                if (!mounted) return;
+                Get.to(() => DlnaControlPage(
+                  dlnaDevice: device,
+                  title: _title ?? device.info.friendlyName,
+                ));
+              }
             },
           );
         },
