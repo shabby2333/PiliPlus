@@ -190,11 +190,13 @@ class _DLNAPageState extends State<DLNAPage> {
                     metadata: _nvaMetadata,
                   );
                   if (!mounted) return;
-                  Get.to(() => DlnaControlPage(
-                    nvaDevice: nvaDevice,
-                    title: _title ?? device.info.friendlyName,
-                    nvaMetadata: _nvaMetadata,
-                  ));
+                  Get.to(
+                    () => DlnaControlPage(
+                      nvaDevice: nvaDevice,
+                      title: _title ?? device.info.friendlyName,
+                      nvaMetadata: _nvaMetadata,
+                    ),
+                  );
                 } catch (e) {
                   if (mounted) {
                     SmartDialog.showToast('NVA连接失败: $e');
@@ -206,10 +208,12 @@ class _DLNAPageState extends State<DLNAPage> {
                 await device.setUrl(_url, title: _title ?? '');
                 await device.play();
                 if (!mounted) return;
-                Get.to(() => DlnaControlPage(
-                  dlnaDevice: device,
-                  title: _title ?? device.info.friendlyName,
-                ));
+                Get.to(
+                  () => DlnaControlPage(
+                    dlnaDevice: device,
+                    title: _title ?? device.info.friendlyName,
+                  ),
+                );
               }
             },
           );

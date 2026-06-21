@@ -122,12 +122,14 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
       case CastEventType.playStateChanged:
         if (data != null) {
           final state = data['playState'] as int?;
-          _isPlaying = state == NvaPlayState.playing || state == NvaPlayState.loading;
+          _isPlaying =
+              state == NvaPlayState.playing || state == NvaPlayState.loading;
           if (mounted) setState(() {});
         }
       case CastEventType.speedChanged:
         if (data != null) {
-          _currentSpeed = (data['currSpeed'] as num?)?.toDouble() ?? _currentSpeed;
+          _currentSpeed =
+              (data['currSpeed'] as num?)?.toDouble() ?? _currentSpeed;
           if (mounted) setState(() {});
         }
       case CastEventType.qnChanged:
@@ -264,7 +266,9 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
           if (widget.isNva)
             IconButton(
               icon: Icon(
-                _danmakuOpen ? Icons.closed_caption : Icons.closed_caption_disabled,
+                _danmakuOpen
+                    ? Icons.closed_caption
+                    : Icons.closed_caption_disabled,
                 color: _danmakuOpen ? cs.primary : null,
               ),
               tooltip: '弹幕',
@@ -281,8 +285,12 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
               SliderTheme(
                 data: SliderThemeData(
                   trackHeight: 4,
-                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
-                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+                  thumbShape: const RoundSliderThumbShape(
+                    enabledThumbRadius: 8,
+                  ),
+                  overlayShape: const RoundSliderOverlayShape(
+                    overlayRadius: 16,
+                  ),
                 ),
                 child: Slider(
                   value: progressPct.clamp(0.0, 1.0),
@@ -302,8 +310,20 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(_formatTime(progress), style: TextStyle(color: cs.onSurface.withValues(alpha: 0.7), fontSize: 12)),
-                    Text(_formatTime(_duration), style: TextStyle(color: cs.onSurface.withValues(alpha: 0.7), fontSize: 12)),
+                    Text(
+                      _formatTime(progress),
+                      style: TextStyle(
+                        color: cs.onSurface.withValues(alpha: 0.7),
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      _formatTime(_duration),
+                      style: TextStyle(
+                        color: cs.onSurface.withValues(alpha: 0.7),
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -316,7 +336,9 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
                   // 后退10秒
                   IconButton.filled(
                     icon: const Icon(Icons.replay_10),
-                    onPressed: _isConnected ? () => _seekTo(progress - 10) : null,
+                    onPressed: _isConnected
+                        ? () => _seekTo(progress - 10)
+                        : null,
                   ),
                   const SizedBox(width: 16),
                   // 播放/暂停
@@ -324,14 +346,19 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
                     style: IconButton.styleFrom(
                       minimumSize: const Size(64, 64),
                     ),
-                    icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow, size: 36),
+                    icon: Icon(
+                      _isPlaying ? Icons.pause : Icons.play_arrow,
+                      size: 36,
+                    ),
                     onPressed: _isConnected ? _togglePlayPause : null,
                   ),
                   const SizedBox(width: 16),
                   // 前进10秒
                   IconButton.filled(
                     icon: const Icon(Icons.forward_10),
-                    onPressed: _isConnected ? () => _seekTo(progress + 10) : null,
+                    onPressed: _isConnected
+                        ? () => _seekTo(progress + 10)
+                        : null,
                   ),
                   const SizedBox(width: 24),
                   // 停止
@@ -346,7 +373,10 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
               // ---- 音量 ----
               Row(
                 children: [
-                  Icon(Icons.volume_up, color: cs.onSurface.withValues(alpha: 0.6)),
+                  Icon(
+                    Icons.volume_up,
+                    color: cs.onSurface.withValues(alpha: 0.6),
+                  ),
                   Expanded(
                     child: Slider(
                       value: _volume.toDouble(),
@@ -358,7 +388,10 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
                       onChangeEnd: (v) => _setVolume(v.round()),
                     ),
                   ),
-                  SizedBox(width: 36, child: Text('$_volume', textAlign: TextAlign.center)),
+                  SizedBox(
+                    width: 36,
+                    child: Text('$_volume', textAlign: TextAlign.center),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
@@ -385,7 +418,10 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
   Widget _buildSpeedSelector(ColorScheme cs) {
     return Row(
       children: [
-        Text('倍速', style: TextStyle(color: cs.onSurface.withValues(alpha: 0.7))),
+        Text(
+          '倍速',
+          style: TextStyle(color: cs.onSurface.withValues(alpha: 0.7)),
+        ),
         const SizedBox(width: 12),
         Expanded(
           child: SingleChildScrollView(
@@ -415,7 +451,8 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
       runSpacing: 8,
       children: _supportQnList.map((qn) {
         final quality = (qn['quality'] as num?)?.toInt() ?? 0;
-        final desc = qn['displayDesc'] as String? ?? qn['description'] ?? '$quality';
+        final desc =
+            qn['displayDesc'] as String? ?? qn['description'] ?? '$quality';
         final isSelected = quality == _currentQn;
         return ChoiceChip(
           label: Text(desc),
