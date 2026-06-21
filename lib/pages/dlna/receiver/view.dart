@@ -24,30 +24,34 @@ class _NvaReceiverPageState extends State<NvaReceiverPage> {
         children: [
           // 开关
           Card(
-            child: Obx(() => SwitchListTile(
-                  title: const Text('启用 DLNA 接收'),
-                  subtitle: Text(_service.isRunning.value ? '运行中' : '已停止'),
-                  value: _service.isRunning.value,
-                  onChanged: (v) {
-                    if (v) {
-                      _service.start();
-                    } else {
-                      _service.stop();
-                    }
-                  },
-                )),
+            child: Obx(
+              () => SwitchListTile(
+                title: const Text('启用 DLNA 接收'),
+                subtitle: Text(_service.isRunning.value ? '运行中' : '已停止'),
+                value: _service.isRunning.value,
+                onChanged: (v) {
+                  if (v) {
+                    _service.start();
+                  } else {
+                    _service.stop();
+                  }
+                },
+              ),
+            ),
           ),
 
           const SizedBox(height: 8),
 
           // 设备名称
           Card(
-            child: Obx(() => ListTile(
-                  title: const Text('设备名称'),
-                  subtitle: Text(_service.deviceName.value),
-                  trailing: const Icon(Icons.edit),
-                  onTap: () => _editName(context),
-                )),
+            child: Obx(
+              () => ListTile(
+                title: const Text('设备名称'),
+                subtitle: Text(_service.deviceName.value),
+                trailing: const Icon(Icons.edit),
+                onTap: () => _editName(context),
+              ),
+            ),
           ),
 
           const SizedBox(height: 8),
@@ -59,21 +63,24 @@ class _NvaReceiverPageState extends State<NvaReceiverPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('服务状态',
-                      style: Theme.of(context).textTheme.titleSmall),
+                  Text('服务状态', style: Theme.of(context).textTheme.titleSmall),
                   const SizedBox(height: 8),
-                  Obx(() => _StatusRow(
-                        label: '运行状态',
-                        value: _service.isRunning.value ? '运行中' : '已停止',
-                        color: _service.isRunning.value
-                            ? colorScheme.primary
-                            : colorScheme.error,
-                      )),
+                  Obx(
+                    () => _StatusRow(
+                      label: '运行状态',
+                      value: _service.isRunning.value ? '运行中' : '已停止',
+                      color: _service.isRunning.value
+                          ? colorScheme.primary
+                          : colorScheme.error,
+                    ),
+                  ),
                   const Divider(),
-                  Obx(() => _StatusRow(
-                        label: '已连接设备',
-                        value: '${_service.connectedClients.value}',
-                      )),
+                  Obx(
+                    () => _StatusRow(
+                      label: '已连接设备',
+                      value: '${_service.connectedClients.value}',
+                    ),
+                  ),
                   const Divider(),
                   const _StatusRow(
                     label: '端口 (TCP)',
@@ -172,11 +179,13 @@ class _StatusRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label),
-        Text(value,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: color,
-            )),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: color,
+          ),
+        ),
       ],
     );
   }

@@ -159,7 +159,8 @@ class NvaFrame {
     final b = StringBuffer('NvaFrame($t seq=$seqId');
     if (commandName != null) b.write(' cmd=$commandName');
     final j = jsonParam;
-    if (j != null) b.write(' json=${j.length > 80 ? '${j.substring(0, 80)}...' : j}');
+    if (j != null)
+      b.write(' json=${j.length > 80 ? '${j.substring(0, 80)}...' : j}');
     b.write(')');
     return b.toString();
   }
@@ -193,11 +194,19 @@ class _NvaParam {
     return buf.buffer.asUint8List();
   }
 
-  factory _NvaParam.decode(Uint8List data, int offset, {required bool isShort}) {
+  factory _NvaParam.decode(
+    Uint8List data,
+    int offset, {
+    required bool isShort,
+  }) {
     if (offset >= data.length) throw FormatException('EOF at offset $offset');
     final len = isShort
         ? data[offset]
-        : ByteData.sublistView(data, offset, offset + 4).getUint32(0, Endian.big);
+        : ByteData.sublistView(
+            data,
+            offset,
+            offset + 4,
+          ).getUint32(0, Endian.big);
     final headSize = isShort ? 1 : 4;
     final start = offset + headSize;
     if (start + len > data.length) {

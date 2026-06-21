@@ -111,34 +111,34 @@ class PlayParams {
   });
 
   Map<String, dynamic> toJson() => {
-        'aid': aid,
-        'cid': cid,
-        'epid': epid,
-        'season_id': seasonId,
-        'oid': oid,
-        'content_type': contentType,
-        'seekTs': seekTs,
-        if (accessKey != null) 'access_key': accessKey,
-        if (currentQn != null) 'current_qn': currentQn,
-        if (desireQn != null) 'desire_qn': desireQn,
-        if (danmakuSwitchSave != null) 'danmakuSwitchSave': danmakuSwitchSave,
-        if (userDesireSpeed != null) 'userDesireSpeed': userDesireSpeed,
-      };
+    'aid': aid,
+    'cid': cid,
+    'epid': epid,
+    'season_id': seasonId,
+    'oid': oid,
+    'content_type': contentType,
+    'seekTs': seekTs,
+    if (accessKey != null) 'access_key': accessKey,
+    if (currentQn != null) 'current_qn': currentQn,
+    if (desireQn != null) 'desire_qn': desireQn,
+    if (danmakuSwitchSave != null) 'danmakuSwitchSave': danmakuSwitchSave,
+    if (userDesireSpeed != null) 'userDesireSpeed': userDesireSpeed,
+  };
 
   factory PlayParams.fromJson(Map<String, dynamic> json) => PlayParams(
-        aid: '${json['aid'] ?? ''}',
-        cid: '${json['cid'] ?? ''}',
-        epid: '${json['epid'] ?? ''}',
-        seasonId: '${json['season_id'] ?? ''}',
-        oid: '${json['oid'] ?? ''}',
-        contentType: json['content_type'] ?? 1,
-        seekTs: json['seekTs'] ?? 0,
-        accessKey: json['access_key'],
-        currentQn: json['current_qn'],
-        desireQn: json['desire_qn'],
-        danmakuSwitchSave: json['danmakuSwitchSave'],
-        userDesireSpeed: (json['userDesireSpeed'] as num?)?.toDouble(),
-      );
+    aid: '${json['aid'] ?? ''}',
+    cid: '${json['cid'] ?? ''}',
+    epid: '${json['epid'] ?? ''}',
+    seasonId: '${json['season_id'] ?? ''}',
+    oid: '${json['oid'] ?? ''}',
+    contentType: json['content_type'] ?? 1,
+    seekTs: json['seekTs'] ?? 0,
+    accessKey: json['access_key'],
+    currentQn: json['current_qn'],
+    desireQn: json['desire_qn'],
+    danmakuSwitchSave: json['danmakuSwitchSave'],
+    userDesireSpeed: (json['userDesireSpeed'] as num?)?.toDouble(),
+  );
 
   String toJsonString() => jsonEncode(toJson());
 }
@@ -240,13 +240,13 @@ class SendDanmakuParams {
   });
 
   Map<String, dynamic> toJson() => {
-        'size': size,
-        'mRemoteDmId': mRemoteDmId,
-        'content': content,
-        'action': action,
-        'type': type,
-        'color': color,
-      };
+    'size': size,
+    'mRemoteDmId': mRemoteDmId,
+    'content': content,
+    'action': action,
+    'type': type,
+    'color': color,
+  };
 
   factory SendDanmakuParams.fromJson(Map<String, dynamic> json) =>
       SendDanmakuParams(
@@ -304,9 +304,9 @@ class SpeedChangedParams {
   });
 
   Map<String, dynamic> toJson() => {
-        'currSpeed': currSpeed,
-        'supportSpeedList': supportSpeedList,
-      };
+    'currSpeed': currSpeed,
+    'supportSpeedList': supportSpeedList,
+  };
 
   String toJsonString() => jsonEncode(toJson());
 }
@@ -330,13 +330,13 @@ class QnDescItem {
   });
 
   Map<String, dynamic> toJson() => {
-        'description': description,
-        'displayDesc': displayDesc,
-        'needLogin': needLogin,
-        'needVip': needVip,
-        'quality': quality,
-        'superscript': superscript,
-      };
+    'description': description,
+    'displayDesc': displayDesc,
+    'needLogin': needLogin,
+    'needVip': needVip,
+    'quality': quality,
+    'superscript': superscript,
+  };
 }
 
 class OnQnSwitchParams {
@@ -351,10 +351,10 @@ class OnQnSwitchParams {
   });
 
   Map<String, dynamic> toJson() => {
-        'curQn': curQn,
-        'supportQnList': supportQnList.map((e) => e.toJson()).toList(),
-        'userDesireQn': userDesireQn,
-      };
+    'curQn': curQn,
+    'supportQnList': supportQnList.map((e) => e.toJson()).toList(),
+    'userDesireQn': userDesireQn,
+  };
 
   String toJsonString() => jsonEncode(toJson());
 }
@@ -375,12 +375,12 @@ class OnEpisodeSwitchPlayItem {
   });
 
   Map<String, dynamic> toJson() => {
-        'aid': aid,
-        'cid': cid,
-        'contentType': contentType,
-        'epId': epId,
-        'seasonId': seasonId,
-      };
+    'aid': aid,
+    'cid': cid,
+    'contentType': contentType,
+    'epId': epId,
+    'seasonId': seasonId,
+  };
 }
 
 class OnEpisodeSwitchParams {
@@ -395,10 +395,10 @@ class OnEpisodeSwitchParams {
   });
 
   Map<String, dynamic> toJson() => {
-        'playItem': playItem.toJson(),
-        'qnDesc': qnDesc,
-        'title': title,
-      };
+    'playItem': playItem.toJson(),
+    'qnDesc': qnDesc,
+    'title': title,
+  };
 
   String toJsonString() => jsonEncode(toJson());
 }

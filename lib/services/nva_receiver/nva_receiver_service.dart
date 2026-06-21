@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'dart:ui' show Color;
 
-import 'package:PiliPlus/http/video.dart';
 import 'package:PiliPlus/http/loading_state.dart';
+import 'package:PiliPlus/http/video.dart';
 import 'package:PiliPlus/plugin/pl_player/controller.dart';
 import 'package:PiliPlus/plugin/pl_player/models/play_status.dart';
 import 'package:PiliPlus/services/nva/nva_command.dart';
@@ -16,7 +17,6 @@ import 'package:PiliPlus/utils/video_utils.dart';
 import 'package:canvas_danmaku/canvas_danmaku.dart';
 import 'package:flutter/foundation.dart' show debugPrint, kDebugMode;
 import 'package:get/get.dart';
-import 'dart:ui' show Color;
 
 /// NVA 接收端服务 (GetxService)
 ///
@@ -81,8 +81,10 @@ class NvaReceiverService extends GetxService {
       );
       await _ssdp.start();
       await _tcp.start();
-      _tcp.onSessionConnected = (_) => connectedClients.value = _tcp.sessionCount;
-      _tcp.onSessionDisconnected = (_) => connectedClients.value = _tcp.sessionCount;
+      _tcp.onSessionConnected = (_) =>
+          connectedClients.value = _tcp.sessionCount;
+      _tcp.onSessionDisconnected = (_) =>
+          connectedClients.value = _tcp.sessionCount;
       isRunning.value = true;
       if (kDebugMode) debugPrint('NVA Receiver started');
     } catch (e) {
@@ -136,13 +138,19 @@ class NvaReceiverService extends GetxService {
   // ---- 命令处理器 ----
 
   void _handleGetVolume(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     final vol = ((PlPlayerController.getVolumeIfExists() ?? 0.5) * 100).round();
     session.sendResponse(reqSeqId, jsonBody: '{"volume":$vol}');
   }
 
   void _handleSetVolume(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     if (json == null) return;
     final vol = (json['volume'] as num?)?.toDouble() ?? 0;
     PlPlayerController.setVolumeIfExists(vol / 100, showIndicator: false);
@@ -150,26 +158,38 @@ class NvaReceiverService extends GetxService {
   }
 
   void _handlePause(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     PlPlayerController.pauseIfExists();
     session.sendResponse(reqSeqId);
   }
 
   void _handleResume(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     PlPlayerController.playIfExists();
     session.sendResponse(reqSeqId);
   }
 
   void _handleStop(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     PlPlayerController.pauseIfExists();
     _progressTimer?.cancel();
     session.sendResponse(reqSeqId);
   }
 
   void _handleSeek(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     if (json == null) return;
     final seekTs = json['seekTs'] as int? ?? 0;
     PlPlayerController.seekToIfExists(
@@ -180,7 +200,10 @@ class NvaReceiverService extends GetxService {
   }
 
   Future<void> _handlePlay(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) async {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) async {
     if (json == null) {
       session.sendResponse(reqSeqId);
       return;
@@ -205,7 +228,10 @@ class NvaReceiverService extends GetxService {
   }
 
   Future<void> _handlePlayUrl(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) async {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) async {
     if (json == null) {
       session.sendResponse(reqSeqId);
       return;
@@ -222,7 +248,10 @@ class NvaReceiverService extends GetxService {
   }
 
   void _handleSwitchSpeed(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     if (json == null) return;
     final speed = double.tryParse('${json['speed']}') ?? 1.0;
     PlPlayerController.instance?.setPlaybackSpeed(speed);
@@ -230,7 +259,10 @@ class NvaReceiverService extends GetxService {
   }
 
   Future<void> _handleSwitchQn(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) async {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) async {
     if (json == null) return;
     final qn = int.tryParse('${json['qn']}') ?? 0;
     _currentQn = qn;
@@ -244,7 +276,10 @@ class NvaReceiverService extends GetxService {
   }
 
   void _handleSwitchDanmaku(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     if (json == null) return;
     final open = json['open'] == 'true' || json['open'] == true;
     GStorage.setting.put(SettingBoxKey.enableShowDanmaku, open);
@@ -257,7 +292,10 @@ class NvaReceiverService extends GetxService {
   }
 
   void _handleSendDanmaku(
-      NvaSession session, Map<String, dynamic>? json, int reqSeqId) {
+    NvaSession session,
+    Map<String, dynamic>? json,
+    int reqSeqId,
+  ) {
     if (json == null) return;
     final params = SendDanmakuParams.fromJson(json);
 
@@ -337,8 +375,10 @@ class NvaReceiverService extends GetxService {
 
     _tcp.broadcast(
       NvaServerCmd.onProgress,
-      jsonBody:
-          OnProgressParams(duration: duration, position: position).toJsonString(),
+      jsonBody: OnProgressParams(
+        duration: duration,
+        position: position,
+      ).toJsonString(),
     );
 
     // 播放状态

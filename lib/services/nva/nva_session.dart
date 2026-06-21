@@ -39,8 +39,11 @@ class NvaSession {
     required String serverUuid,
     void Function(NvaSession session, NvaFrame frame)? onCommand,
   }) {
-    final session = NvaSession._(socket,
-        serverUuid: serverUuid, onCommand: onCommand);
+    final session = NvaSession._(
+      socket,
+      serverUuid: serverUuid,
+      onCommand: onCommand,
+    );
     session._beginHandshake();
     return session;
   }
@@ -84,8 +87,7 @@ class NvaSession {
         final remaining = buffer.sublist(handshakeBytes.length);
 
         try {
-          final req = NvaHandshakeRequest.parse(
-              utf8.decode(handshakeBytes));
+          final req = NvaHandshakeRequest.parse(utf8.decode(handshakeBytes));
           sessionId = req.session.isEmpty
               ? NvaUuid.generateSession()
               : req.session;
@@ -195,8 +197,8 @@ class NvaSession {
           paramLen = _buffer[offset];
         } else {
           paramLen = ByteData.sublistView(
-                  Uint8List.fromList(_buffer.sublist(offset, offset + 4)))
-              .getUint32(0, Endian.big);
+            Uint8List.fromList(_buffer.sublist(offset, offset + 4)),
+          ).getUint32(0, Endian.big);
         }
         offset += headSize + paramLen;
         if (_buffer.length < offset) {
@@ -221,11 +223,13 @@ class NvaSession {
   // ---- 发送 ----
 
   void sendCommand(String commandName, {String? jsonBody}) {
-    _sendFrame(NvaFrame.command(
-      seqId: nextSeqId,
-      commandName: commandName,
-      jsonBody: jsonBody,
-    ));
+    _sendFrame(
+      NvaFrame.command(
+        seqId: nextSeqId,
+        commandName: commandName,
+        jsonBody: jsonBody,
+      ),
+    );
   }
 
   void sendResponse(int seqId, {String? jsonBody}) {
@@ -266,8 +270,18 @@ class NvaSession {
     final now = DateTime.now().toUtc();
     const wd = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const mo = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${wd[now.weekday - 1]}, ${now.day.toString().padLeft(2, '0')} '
         '${mo[now.month - 1]} ${now.year} '

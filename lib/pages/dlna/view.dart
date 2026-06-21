@@ -123,13 +123,18 @@ class _DLNAPageState extends State<DLNAPage> {
                 Expanded(
                   child: Text(
                     device.info.friendlyName,
-                    style: isCurr ? TextStyle(color: colorScheme.primary) : null,
+                    style: isCurr
+                        ? TextStyle(color: colorScheme.primary)
+                        : null,
                   ),
                 ),
                 if (isNva)
                   Container(
                     margin: const EdgeInsets.only(left: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 1,
+                    ),
                     decoration: BoxDecoration(
                       color: colorScheme.primaryContainer,
                       borderRadius: BorderRadius.circular(4),

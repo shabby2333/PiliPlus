@@ -87,7 +87,8 @@ class NvaHandshakeRequest {
   bool get isRestore => method == 'RESTORE';
 
   @override
-  String toString() => 'NvaHandshakeRequest($method session=$session uuid=$uuid)';
+  String toString() =>
+      'NvaHandshakeRequest($method session=$session uuid=$uuid)';
 }
 
 /// NVA 握手: 服务端 → 客户端响应
@@ -136,7 +137,8 @@ class NvaHandshakeResponse {
   }
 
   @override
-  String toString() => 'NvaHandshakeResponse($statusCode $statusText session=$session)';
+  String toString() =>
+      'NvaHandshakeResponse($statusCode $statusText session=$session)';
 }
 
 /// NVA UUID 生成工具
