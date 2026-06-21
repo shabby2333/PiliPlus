@@ -4,6 +4,7 @@ import 'package:PiliPlus/pages/dlna/cast/cast_device.dart';
 import 'package:PiliPlus/pages/dlna/cast/nva_cast_device.dart';
 import 'package:PiliPlus/services/nva/nva_command.dart';
 import 'package:dlna_dart/dlna.dart';
+import 'package:dlna_dart/xmlParser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -283,12 +284,12 @@ class _DlnaControlPageState extends State<DlnaControlPage> {
             children: [
               // ---- 进度条 ----
               SliderTheme(
-                data: SliderThemeData(
+                data: const SliderThemeData(
                   trackHeight: 4,
-                  thumbShape: const RoundSliderThumbShape(
+                  thumbShape: RoundSliderThumbShape(
                     enabledThumbRadius: 8,
                   ),
-                  overlayShape: const RoundSliderOverlayShape(
+                  overlayShape: RoundSliderOverlayShape(
                     overlayRadius: 16,
                   ),
                 ),
