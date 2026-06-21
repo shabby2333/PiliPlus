@@ -40,9 +40,7 @@ class _DLNAPageState extends State<DLNAPage> {
       setState(() {});
     }
     final deviceManager = await _searcher.start();
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
     _timer = Timer(const Duration(seconds: 20), _searcher.stop);
     await for (final deviceList in deviceManager.devices.stream) {
       if (mounted) {
@@ -51,9 +49,7 @@ class _DLNAPageState extends State<DLNAPage> {
       }
     }
     if (mounted) {
-      setState(() {
-        _isSearching = false;
-      });
+      setState(() => _isSearching = false);
     }
   }
 
@@ -65,6 +61,18 @@ class _DLNAPageState extends State<DLNAPage> {
     _lastDevice = null;
     _lastDeviceKey = null;
     super.dispose();
+  }
+
+  /// 判断设备是否可能支持 NVA 协议 (通过 serviceList 检测 NirvanaControl)
+  bool _isNvaDevice(DLNADevice device) {
+    final services = device.info.serviceList;
+    for (final svc in services) {
+      if (svc is Map) {
+        final id = '${svc['serviceId'] ?? ''}';
+        if (id.toLowerCase().contains('nirvanacontrol')) return true;
+      }
+    }
+    return false;
   }
 
   @override
@@ -94,10 +102,7 @@ class _DLNAPageState extends State<DLNAPage> {
 
   Widget _buildBody(ColorScheme colorScheme) {
     if (!_isSearching && _deviceList.isEmpty) {
-      return HttpError(
-        errMsg: '没有设备',
-        onReload: _onSearch,
-      );
+      return HttpError(errMsg: '没有设备', onReload: _onSearch);
     }
     if (_deviceList.isNotEmpty) {
       final keys = _deviceList.keys.toList();
@@ -107,12 +112,39 @@ class _DLNAPageState extends State<DLNAPage> {
           final key = keys[index];
           final device = _deviceList[key]!;
           final isCurr = key == _lastDeviceKey;
+          final isNva = _isNvaDevice(device);
+
           return ListTile(
-            title: Text(
-              device.info.friendlyName,
-              style: isCurr ? TextStyle(color: colorScheme.primary) : null,
+            leading: isNva
+                ? Icon(Icons.tv, color: colorScheme.primary)
+                : const Icon(Icons.cast),
+            title: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    device.info.friendlyName,
+                    style: isCurr ? TextStyle(color: colorScheme.primary) : null,
+                  ),
+                ),
+                if (isNva)
+                  Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      '必联',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: colorScheme.onPrimaryContainer,
+                      ),
+                    ),
+                  ),
+              ],
             ),
-            subtitle: Text(key),
+            subtitle: Text(isNva ? '$key (NVA)' : key),
             onTap: () async {
               if (isCurr) return;
               _lastDevice?.pause();

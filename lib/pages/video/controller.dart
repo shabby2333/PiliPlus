@@ -1595,11 +1595,27 @@ class VideoDetailController extends GetxController
         '/dlna',
         parameters: {
           'url': url,
-          'title': ?title,
+          'title': title ?? '',
+          'metadata': Uri.encodeQueryComponent(
+            _buildNvaMetadata(),
+          ),
         },
       );
     } else {
       res.toast();
     }
+  }
+
+  /// 构建 NVA 协议的投屏元数据
+  String _buildNvaMetadata() {
+    final params = <String, String>{
+      'aid': '$aid',
+      'cid': '${cid.value}',
+      'epid': '$epId',
+      'season_id': '$seasonId',
+      'oid': epId != null ? '$epId' : '$aid',
+      'content_type': '1',
+    };
+    return Uri(queryParameters: params).query;
   }
 }
